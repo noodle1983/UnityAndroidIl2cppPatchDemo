@@ -12,8 +12,10 @@ rem ============================================================================
 SET ProjectPath=%ScriptPath%
 SET BuildCmd=%UnityBin% -quit -buildTarget android -batchmode -projectPath "%ProjectPath%" 
 
+cd %ProjectPath%
+%BuildCmd% -executeMethod AndroidBuilder.BuildWithoutPatch
 if not exist "%ProjectPath%\AndroidGradleProject\Test\src\main\bin\com.test.test.apk" (
-    echo "Build Version1 Failed! Please Rerun %ProjectPath%\AndroidGradleProject\Test\src\main\build_apk.bat to check the error."
+    echo "Build Failed! Please Rerun %ProjectPath%\AndroidGradleProject\Test\src\main\build_apk.bat to check the error."
 	exit -1
 )
 
