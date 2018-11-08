@@ -1,0 +1,13 @@
+.gitignore
+AndroidGradleProject*
+Library/
+Temp/
+UnityVS.*
+.vs
+*.csproj
+*.sln
+obj/
+AllAndroidPatchFiles*
+UnityPackageManager
+*.apk
+AndroidKeystore
