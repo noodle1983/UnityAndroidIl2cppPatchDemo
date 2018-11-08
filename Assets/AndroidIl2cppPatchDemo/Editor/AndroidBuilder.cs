@@ -98,9 +98,9 @@ public class AndroidBuilder : MonoBehaviour {
         if (string.IsNullOrEmpty(ndkPath) || !Directory.Exists(ndkPath)) { ndkPath = DEFAULT_NDK_PATH; }
         if (string.IsNullOrEmpty(ndkPath) || !Directory.Exists(ndkPath))
         {
-            Debug.LogError("ndk path is empty! please config via menu path:Edit/Preference->External tools.");
-            return false;
-        }
+                Debug.LogError("ndk path is empty! please config via menu path:Edit/Preference->External tools.");
+                return false;
+            }
 
         Debug.Log("Build Env is ready!");
         Debug.Log("Build Options:");
@@ -293,15 +293,10 @@ import io.github.noodle1983.Boostrap;");
             allZipCmds.AppendFormat("cd {0} && {1} -8 \"{2}\" \"{3}\"\n", BUILD_SCRIPTS_PATH, ZIP_PATH, assertBinDataPatchPath + zipFileName, filenameInZip);
         }
 
-        //remove file example
-        allZipCmds.AppendFormat("cd {0} && echo assets/bin/Data/to_be_removed1.txt> {1}\n", patchTopPath, TO_BE_REMOVED_FILE_NAME);
-        allZipCmds.AppendFormat("cd {0} && echo assets/bin/Data/to_be_removed2.txt>> {1}\n", patchTopPath, TO_BE_REMOVED_FILE_NAME);
-
         string zippedPatchFile = PROJECT_DIR + "/Assets/AndroidIl2cppPatchDemo/PrebuiltPatches/AllAndroidPatchFiles_Version1.zip";
         if (File.Exists(zippedPatchFile)) { FileUtil.DeleteFileOrDirectory(zippedPatchFile);  }
-        allZipCmds.Append("ping 127.0.0.1 -n 1 > nul\n");
-		allZipCmds.AppendFormat("cd {0} && {1} -9 -r \"{2}\" \"{3}\"\n", patchTopPath, ZIP_PATH, zippedPatchFile, "*");
-        allZipCmds.AppendFormat("explorer.exe {0} \n\n", (PROJECT_DIR + "/Assets/AndroidIl2cppPatchDemo/PrebuiltPatches/").Replace("//", "/").Replace("/", "\\"));
+        allZipCmds.AppendFormat("cd {0} && {1} -9 -r \"{2}\" \"{3}\"\n", patchTopPath, ZIP_PATH, zippedPatchFile, "*");
+        allZipCmds.AppendFormat("explorer.exe {0} \n\n", zippedPatchFile.Replace("//", "/").Replace("/", "\\"));
         allZipCmds.AppendFormat("@echo on\n\n"); //explorer as the last line wont return success, so...
 
         if (allZipCmds.Length > 0)
