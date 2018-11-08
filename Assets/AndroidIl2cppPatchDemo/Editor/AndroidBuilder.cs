@@ -137,7 +137,11 @@ public class AndroidBuilder : MonoBehaviour {
         Directory.CreateDirectory(ANDROID_EXPORT_PATH);
         try
         {
+#if UNITY_2018
+            error_msg = BuildPipeline.BuildPlayer(levels, ANDROID_EXPORT_PATH, EditorUserBuildSettings.activeBuildTarget, options).summary.result == UnityEditor.Build.Reporting.BuildResult.Succeeded ? string.Empty : "Failed to export project!";
+#else
             error_msg = BuildPipeline.BuildPlayer(levels, ANDROID_EXPORT_PATH, EditorUserBuildSettings.activeBuildTarget, options);
+#endif
         }
         catch (Exception e)
         {
