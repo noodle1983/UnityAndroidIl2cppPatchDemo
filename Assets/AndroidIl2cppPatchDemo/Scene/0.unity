@@ -357,7 +357,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.57281953, g: 0.4044118, b: 1, a: 1}
+  m_Color: {r: 0.40873703, g: 0.66176474, b: 0.44189242, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -854,7 +854,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: THIS IS THE BASE VERSION
+  m_Text: THIS IS THE VERSION 1
 --- !u!222 &957591103
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -932,7 +932,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Upgrade To Version 1
+  m_Text: Rollback to Base Version
 --- !u!222 &1126477268
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1365,7 +1365,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.57281953, g: 0.4044118, b: 1, a: 1}
+  m_Color: {r: 0.40873703, g: 0.66176474, b: 0.44189242, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1718,7 +1718,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.57281953, g: 0.4044118, b: 1, a: 1}
+  m_Color: {r: 0.40873703, g: 0.66176474, b: 0.44189242, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1746,7 +1746,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ceb14ced64f31740af354d6e86b5f05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  updateVersion: 1
+  updateVersion: 0
   messageBox: {fileID: 1369793249}
 --- !u!114 &2048904144
 MonoBehaviour:
