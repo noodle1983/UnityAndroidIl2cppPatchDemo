@@ -261,7 +261,7 @@ import io.github.noodle1983.Boostrap;");
         allZipCmds.AppendFormat("cd {0} && echo assets/bin/Data/to_be_removed1.txt> {1}\n", patchTopPath, TO_BE_REMOVED_FILE_NAME);
         allZipCmds.AppendFormat("cd {0} && echo assets/bin/Data/to_be_removed2.txt>> {1}\n", patchTopPath, TO_BE_REMOVED_FILE_NAME);
 
-        string zippedPatchFile = PROJECT_DIR + "/Assets/AndroidIl2cppPatchDemo/PrebuiltPatches/AllAndroidPatchFiles_Version1.zip";
+        string zippedPatchFile = PROJECT_DIR + "/Assets/AndroidIl2cppPatchDemo/PrebuiltPatches/AllAndroidPatchFiles_Version2.zip";
         if (File.Exists(zippedPatchFile)) { FileUtil.DeleteFileOrDirectory(zippedPatchFile);  }
         allZipCmds.AppendFormat("sleep 1 && cd {0} && {1} -9 -r \"{2}\" \"{3}\"\n", patchTopPath, ZIP_PATH, zippedPatchFile, "*");
         allZipCmds.AppendFormat("explorer.exe {0} \n\n", (PROJECT_DIR + "/Assets/AndroidIl2cppPatchDemo/PrebuiltPatches/").Replace("//", "/").Replace("/", "\\"));
