@@ -281,8 +281,12 @@ import io.github.noodle1983.Boostrap;");
 
             allZipCmds.AppendFormat("cd {0} && {1} -8 \"{2}\" \"{3}\"\n", BUILD_SCRIPTS_PATH, ZIP_PATH, PROJECT_DIR + "/AllAndroidPatchFiles/assets_bin_Data/" + zipFileName, filenameInZip);
         }
-        allZipCmds.Append("sleep 1\n");
-        allZipCmds.AppendFormat("cd {0} && {1} -9 -r \"{2}\" \"{3}\"\n", patchTopPath, ZIP_PATH, PROJECT_DIR + "/AllAndroidPatchFiles_Versionx.zip", "*");
+
+        string zippedPatchFile = PROJECT_DIR + "/Assets/AndroidIl2cppPatchDemo/PrebuiltPatches/AllAndroidPatchFiles_Version1.zip";
+        if (File.Exists(zippedPatchFile)) { FileUtil.DeleteFileOrDirectory(zippedPatchFile);  }
+        allZipCmds.AppendFormat("cd {0} && {1} -9 -r \"{2}\" \"{3}\"\n", patchTopPath, ZIP_PATH, zippedPatchFile, "*");
+        allZipCmds.AppendFormat("explorer.exe {0} \n\n", zippedPatchFile.Replace("//", "/").Replace("/", "\\"));
+        allZipCmds.AppendFormat("@echo on\n\n"); //explorer as the last line wont return success, so...
 
         if (allZipCmds.Length > 0)
         {
