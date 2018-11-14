@@ -52,7 +52,7 @@ Unity在以il2cpp方式导出Android工程（或者Apk文件）的时候，代�
 
 ## 3.2.	打包过程
 
-所有的打包逻辑在文件Editor\AndroidBuilder.cs里。展开主菜单**AndroidBuilder**, 可以看到有5步，为了和启动流程区分，我们就叫他过程。
+所有的打包逻辑在文件Editor\AndroidBuilder.cs里。展开主菜单**AndroidBuilder**, 可以看到有5步，为了和热更启动流程区分，我们就叫他过程。
 
 - 过程1：以il2cpp的方式，导出Gradle Android工程。选择Gradle Android工程，而不是ADT Android工程，只是因为Unity2018不再支持ADT方式。Demo并不依赖AndroidStudio，只是导出的Android工程目录结构是以Gradle的方式注释，之后的构建步骤都是调用原始JDK/SDK的方式。Demo这部分的代码可以复用，但需要根据项目需求做一些修改。
 
