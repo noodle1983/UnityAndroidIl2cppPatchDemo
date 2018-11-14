@@ -34,9 +34,10 @@ Unity在以il2cpp方式导出Android工程（或者Apk文件）的时候，代�
 
 ## 3.1.	Demo目录结构
 
-工程所有文件均置于AndroidIl2cppPatchDemo目录下。各文件目录说明如下表.
+工程所有文件均置于AndroidIl2cppPatchDemo目录下。各文件目录说明如下表。
+
 | 名字        | 说明   |
-| --------    | -----      |
+| -------- | ----- |
 | Editor/AndroidBuilder.cs| 这个文件包含所有从导出Android工程，到输出Patch和生成Apk安装文件的代码。|
 | Editor/Exe/zip.exe| zip压缩工具，用来将asset/bin/Data下的文件压缩成标准zip格式。 |
 | Plugin/| 包含libbootstrap库. |
