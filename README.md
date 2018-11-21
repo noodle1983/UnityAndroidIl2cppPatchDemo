@@ -1,6 +1,5 @@
-﻿# 1. 简介
-这是Unity Android APP il2cpp热更解决方案的Demo。
-
+# 1. 简介
+这是Unity Android APP il2cpp热更完美解决方案的Demo（[Git地址](https://github.com/noodle1983/UnityAndroidIl2cppPatchDemo/)）的说明。
     
 和现有的热更解决方案不同的是，他不会引入多余的语言（只是UnityScript，c#...），对Unity程序设计和编码没有任何限制。你可以在预置和场景里的GameObject上添加任何的Compnents组件，需要序列化的和不需要序列化的，他们都是可以热更的，也不需要做额外的标记处理。简而言之，在此方案下，Unity的所有资源和脚本，都是可以热更的。
 
@@ -138,15 +137,20 @@ Unity在以il2cpp方式导出Android工程（或者Apk文件）的时候，代�
 
 如大家所见，核心的代码都封装在了libbootstrap库中，可以研究，但商业化就不要了，你的时间绝对高于他的价值，不免俗，all rights reserved。
 
-库按bundle id收费，没其他限制，每个bundle id人民币100元（远不及我们公司薪资最低程序一天的工资，找公司报销吧，只是我没发票）。一般不会有几个人购买，没自动化流程，先把bundle id和付款方式（微信/支付宝）邮件给我（noodle1983@126.com)，我会回复确认和支付码，确认付款后再邮件给你相应的库，圈子不大我不会走佬。
+购买链接[
+UnityAndroidIl2cppPatchDemo in Unity Asset Store](https://www.assetstore.unity3d.com/#!/content/131734)，库按bundle id收费，一个购买记录一个bundle id，没其他限制（远不及我们公司薪资最低程序一天的工资，找公司报销吧）。
 
 如果库有更新，我会以邮件的方式发送。如果方案哪天不work了，我解决不了，会把代码发给大家。
 
-另外，我所在公司清算关闭了（Patch的方案重写过，技术是原来的技术，但是方案完全不同，没版权问题），自己也卖，卖艺不卖身。
+最主要的，我所在公司清算关闭了（Patch的方案重写过，技术是原来的技术，但是方案完全不同，没版权问题），自己也卖，卖艺不卖身，团队也卖，可牵头。
 - 简历：https://linkedin.com/in/dong-lu-108a813a 
-- 地点：广州天河或者增城
+- 地点：广州
 - 多年服务器c/c++设计，编码，调试，调优，消core除漏经验，其他perl/python/lua/c#/object c/java项目用到就用，用不到就忘
-- 带过最多10人队伍
+- 我们双端研发，Unity也熟（除了shader）
+- 带过最多10人队伍（团队仍有人没找着工作，化整为零是最蠢的方式，最好是带上大家组队，可带队）
+- 作品0：[JusGame2018_0301_1623.apk](https://pan.baidu.com/s/1V16ObEbxhLRGOurbKysNdw)
+- 作品1：暗黑血统1/2（行业笑话了，各大市场搜暗黑血统2，快下架了, 下架了再弄个服务器吧）
+- 作品2：[com.ymrgame.grasstest58.apk](https://pan.baidu.com/s/1V16ObEbxhLRGOurbKysNdw)
 - 欢迎骚扰
 
 # 7.联系方式
