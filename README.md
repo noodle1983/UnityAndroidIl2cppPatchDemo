@@ -142,12 +142,12 @@ UnityAndroidIl2cppPatchDemo in Unity Asset Store](https://www.assetstore.unity3d
 
 如果库有更新，我会以邮件的方式发送。如果方案哪天不work了，我解决不了，会把代码发给大家。
 
-最主要的，我所在公司清算关闭了（Patch的方案重写过，技术是原来的技术，但是方案完全不同，没版权问题），自己也卖，卖艺不卖身，团队也卖，可牵头。
-- 简历：https://linkedin.com/in/dong-lu-108a813a 
+**最主要的，我所在公司清算关闭了（Patch的方案重写过，技术是原来的技术，但是方案完全不同，没版权问题），自己也卖，卖艺不卖身，程序团队也卖，可牵头。**
+- 简历：[linkin](https://www.linkedin.com/public-profile/settings?trk=d_flagship3_profile_self_view_public_profile&lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_self_edit_top_card%3Bsi2q5PYkQvOrUMzBph5l%2Fw%3D%3D)
 - 地点：广州
 - 多年服务器c/c++设计，编码，调试，调优，消core除漏经验，其他perl/python/lua/c#/object c/java项目用到就用，用不到就忘
 - 我们双端研发，Unity也熟（除了shader）
-- 带过最多10人队伍（团队仍有人没找着工作，化整为零是最蠢的方式，最好是带上大家组队，可带队）
+- 带过最多10人队伍（程序团队仍有人没找着工作，化整为零是最蠢的方式，无奈形势比人强，可带队）
 - 作品0：[JusGame2018_0301_1623.apk](https://pan.baidu.com/s/1V16ObEbxhLRGOurbKysNdw)
 - 作品1：暗黑血统1/2（行业笑话了，各大市场搜暗黑血统2，快下架了, 下架了再弄个服务器吧）
 - 作品2：[com.ymrgame.grasstest58.apk](https://pan.baidu.com/s/1V16ObEbxhLRGOurbKysNdw)
