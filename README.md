@@ -140,8 +140,6 @@ Unity在以il2cpp方式导出Android工程（或者Apk文件）的时候，代�
 购买链接[
 UnityAndroidIl2cppPatchDemo in Unity Asset Store](https://www.assetstore.unity3d.com/#!/content/131734)，库按bundle id收费，一个购买记录一个bundle id，没其他限制（远不及我们公司薪资最低程序一天的工资，找公司报销吧）。
 
-如果库有更新，我会以邮件的方式发送。如果方案哪天不work了，我解决不了，会把代码发给大家。
-
 **最主要的，我所在公司清算关闭了（Patch的方案重写过，技术是原来的技术，但是方案完全不同，没版权问题），自己也卖，卖艺不卖身，程序团队也卖，可牵头。**
 - 简历：[linkin](https://www.linkedin.com/public-profile/settings?trk=d_flagship3_profile_self_view_public_profile&lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_self_edit_top_card%3Bsi2q5PYkQvOrUMzBph5l%2Fw%3D%3D)
 - 地点：广州
