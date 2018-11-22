@@ -133,23 +133,12 @@ Unity在以il2cpp方式导出Android工程（或者Apk文件）的时候，代�
 
 另外，打包的工作尽量自动的一键化，一次化，除非你想在打包当晚集体晒月亮。另外，低成本的打包流程，大家都愿意在真机上看结果，利于产品的稳定。Demo其实提供了一套自动化的框架和脚本，理解透，化为己用，也是幸事一件。如果有更好的方式，欢迎讨论。
 
-# 6. 购买和售后
+# 6. 购买
 
 如大家所见，核心的代码都封装在了libbootstrap库中，可以研究，但商业化就不要了，你的时间绝对高于他的价值，不免俗，all rights reserved。
 
 购买链接[
 UnityAndroidIl2cppPatchDemo in Unity Asset Store](https://www.assetstore.unity3d.com/#!/content/131734)，库按bundle id收费，一个购买记录一个bundle id，没其他限制（远不及我们公司薪资最低程序一天的工资，找公司报销吧）。
-
-**最主要的，我所在公司清算关闭了（Patch的方案重写过，技术是原来的技术，但是方案完全不同，没版权问题），自己也卖，卖艺不卖身，程序团队也卖（能力见作品），可牵头。**
-- 简历：[linkin](https://www.linkedin.com/public-profile/settings?trk=d_flagship3_profile_self_view_public_profile&lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_self_edit_top_card%3Bsi2q5PYkQvOrUMzBph5l%2Fw%3D%3D)
-- 地点：广州
-- 多年服务器c/c++设计，编码，调试，调优，消core除漏经验，其他perl/python/lua/c#/object c/java项目用到就用，用不到就忘
-- 我们双端研发，Unity也熟（除了shader）
-- 带过最多10人队伍（程序团队仍有人没找着工作，化整为零是最蠢的方式，无奈形势比人强，可带队）
-- 作品0：[JusGame2018_0301_1623.apk](https://pan.baidu.com/s/1V16ObEbxhLRGOurbKysNdw)（用户名随意，密码留空）
-- 作品1：暗黑血统1/2（行业笑话了，各大市场搜暗黑血统2，快下架了, 下架了再弄个服务器吧）
-- 作品2（做了好多客户端效果）：[com.ymrgame.grasstest58.apk](https://pan.baidu.com/s/1V16ObEbxhLRGOurbKysNdw)（选1-100区，绿色的服，进主程左下角+号可以打开各种效果）
-- 欢迎骚扰
 
 # 7.联系方式
 
