@@ -204,6 +204,9 @@ public class AndroidBuilder : MonoBehaviour {
                 // path_in_android_project, filename inside zip, zip file anme
                 new string[3]{ "/"+ SO_DIR_NAME + "/armeabi-v7a/libil2cpp.so", "libil2cpp.so.new", "lib_armeabi-v7a_libil2cpp.so.zip" },
                 new string[3]{ "/"+ SO_DIR_NAME + "/x86/libil2cpp.so", "libil2cpp.so.new", "lib_x86_libil2cpp.so.zip" },
+#if UNITY_2018              
+                new string[3]{ "/"+ SO_DIR_NAME + "/arm64-v8a/libil2cpp.so", "libil2cpp.so.new", "lib_arm64-v8a_libil2cpp.so.zip" },
+#endif
         };
 
         for (int i = 0; i < soPatchFile.Length; i++)
@@ -297,6 +300,10 @@ public class AndroidBuilder : MonoBehaviour {
         Directory.CreateDirectory(outputLibPath);
         FileUtil.ReplaceDirectory(SO_LIB_PATH + "/armeabi-v7a", outputLibPath + "/armeabi-v7a");
         FileUtil.ReplaceDirectory(SO_LIB_PATH + "/x86", outputLibPath + "/x86");
+#if UNITY_2018
+        FileUtil.ReplaceDirectory(SO_LIB_PATH + "/arm64-v8a", outputLibPath + "/arm64-v8a");
+        FileUtil.DeleteFileOrDirectory(outputLibPath + "/arm64-v8a/Data");
+#endif
         FileUtil.DeleteFileOrDirectory(outputLibPath + "/armeabi-v7a/Data");
         FileUtil.DeleteFileOrDirectory(outputLibPath + "/x86/Data");
         var debug_files = Directory.GetFiles(outputLibPath, "*.*", SearchOption.AllDirectories).Where(s => s.EndsWith(".debug") || s.EndsWith(".map") || s.EndsWith(".sym"));
