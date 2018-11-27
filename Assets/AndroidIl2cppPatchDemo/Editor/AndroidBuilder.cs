@@ -127,7 +127,9 @@ public class AndroidBuilder : MonoBehaviour {
         EditorUserBuildSettings.androidBuildSystem = AndroidBuildSystem.Gradle;
         PlayerSettings.SetScriptingBackend(BuildTargetGroup.Android, ScriptingImplementation.IL2CPP);
         PlayerSettings.stripEngineCode = false;
-        //PlayerSettings.Android.targetArchitectures = AndroidArchitecture.ARMv7 | AndroidArchitecture.X86;
+#if UNITY_2018
+        PlayerSettings.Android.targetArchitectures = AndroidArchitecture.ARMv7 | AndroidArchitecture.X86 | AndroidArchitecture.ARM64;
+#endif
 
         //export project
         string error_msg = string.Empty;
