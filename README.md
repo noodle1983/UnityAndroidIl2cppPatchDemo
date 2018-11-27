@@ -1,6 +1,5 @@
-﻿# 1. 简介
-这是Unity Android APP il2cpp热更解决方案的Demo。
-
+# 1. 简介
+这是Unity Android APP il2cpp热更完美解决方案的Demo（[Git地址](https://github.com/noodle1983/UnityAndroidIl2cppPatchDemo/)）的说明。
     
 和现有的热更解决方案不同的是，他不会引入多余的语言（只是UnityScript，c#...），对Unity程序设计和编码没有任何限制。你可以在预置和场景里的GameObject上添加任何的Compnents组件，需要序列化的和不需要序列化的，他们都是可以热更的，也不需要做额外的标记处理。简而言之，在此方案下，Unity的所有资源和脚本，都是可以热更的。
 
@@ -52,7 +51,7 @@ Unity在以il2cpp方式导出Android工程（或者Apk文件）的时候，代�
 
 ## 3.2.	打包过程
 
-所有的打包逻辑在文件Editor\AndroidBuilder.cs里。展开主菜单**AndroidBuilder**, 可以看到有5步，为了和启动流程区分，我们就叫他过程。
+所有的打包逻辑在文件Editor\AndroidBuilder.cs里。展开主菜单**AndroidBuilder**, 可以看到有5步，为了和热更启动流程区分，我们就叫他过程。
 
 - 过程1：以il2cpp的方式，导出Gradle Android工程。选择Gradle Android工程，而不是ADT Android工程，只是因为Unity2018不再支持ADT方式。Demo并不依赖AndroidStudio，只是导出的Android工程目录结构是以Gradle的方式注释，之后的构建步骤都是调用原始JDK/SDK的方式。Demo这部分的代码可以复用，但需要根据项目需求做一些修改。
 
@@ -134,20 +133,12 @@ Unity在以il2cpp方式导出Android工程（或者Apk文件）的时候，代�
 
 另外，打包的工作尽量自动的一键化，一次化，除非你想在打包当晚集体晒月亮。另外，低成本的打包流程，大家都愿意在真机上看结果，利于产品的稳定。Demo其实提供了一套自动化的框架和脚本，理解透，化为己用，也是幸事一件。如果有更好的方式，欢迎讨论。
 
-# 6. 购买和售后
+# 6. 购买
 
 如大家所见，核心的代码都封装在了libbootstrap库中，可以研究，但商业化就不要了，你的时间绝对高于他的价值，不免俗，all rights reserved。
 
-库按bundle id收费，没其他限制，每个bundle id人民币100元（远不及我们公司薪资最低程序一天的工资，找公司报销吧，只是我没发票）。一般不会有几个人购买，没自动化流程，先把bundle id和付款方式（微信/支付宝）邮件给我（noodle1983@126.com)，我会回复确认和支付码，确认付款后再邮件给你相应的库，圈子不大我不会走佬。
-
-如果库有更新，我会以邮件的方式发送。如果方案哪天不work了，我解决不了，会把代码发给大家。
-
-另外，我所在公司清算关闭了（Patch的方案重写过，技术是原来的技术，但是方案完全不同，没版权问题），自己也卖，卖艺不卖身。
-- 简历：https://linkedin.com/in/dong-lu-108a813a 
-- 地点：广州天河或者增城
-- 多年c/c++经验
-- 最多带过10人队伍
-- 欢迎骚扰
+购买链接[
+UnityAndroidIl2cppPatchDemo in Unity Asset Store](https://www.assetstore.unity3d.com/#!/content/131734)，库按bundle id收费，一个购买记录一个bundle id，没其他限制（远不及我们公司薪资最低程序一天的工资，找公司报销吧）。
 
 # 7.联系方式
 
