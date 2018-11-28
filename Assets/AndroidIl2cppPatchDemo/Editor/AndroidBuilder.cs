@@ -148,8 +148,11 @@ public class AndroidBuilder : MonoBehaviour {
         }
 
         //copy the prebuild patch to the assets directory instead of downloading.
-        FileUtil.CopyFileOrDirectory(PROJECT_DIR + "/Assets/AndroidIl2cppPatchDemo/PrebuiltPatches/AllAndroidPatchFiles_Version1.zip", EXPORTED_ASSETS_PATH + "/AllAndroidPatchFiles_Version1.zip");
-        FileUtil.CopyFileOrDirectory(PROJECT_DIR + "/Assets/AndroidIl2cppPatchDemo/PrebuiltPatches/AllAndroidPatchFiles_Version2.zip", EXPORTED_ASSETS_PATH + "/AllAndroidPatchFiles_Version2.zip");
+        string zippedPatch1File = PROJECT_DIR + "/Assets/AndroidIl2cppPatchDemo/PrebuiltPatches/AllAndroidPatchFiles_Version1.zip";
+        string zippedPatch12File = PROJECT_DIR + "/Assets/AndroidIl2cppPatchDemo/PrebuiltPatches/AllAndroidPatchFiles_Version2.zip";
+        if (File.Exists(zippedPatch1File)) { FileUtil.CopyFileOrDirectory(zippedPatch1File, EXPORTED_ASSETS_PATH + "/AllAndroidPatchFiles_Version1.zip");}
+        if (File.Exists(zippedPatch12File)) { FileUtil.CopyFileOrDirectory(zippedPatch12File, EXPORTED_ASSETS_PATH + "/AllAndroidPatchFiles_Version2.zip");}
+        
         return true;
     }
 
@@ -285,7 +288,7 @@ import io.github.noodle1983.Boostrap;");
         string zippedPatchFile = PROJECT_DIR + "/Assets/AndroidIl2cppPatchDemo/PrebuiltPatches/AllAndroidPatchFiles_Version1.zip";
         if (File.Exists(zippedPatchFile)) { FileUtil.DeleteFileOrDirectory(zippedPatchFile);  }
         allZipCmds.AppendFormat("cd {0} && {1} -9 -r \"{2}\" \"{3}\"\n", patchTopPath, ZIP_PATH, zippedPatchFile, "*");
-        allZipCmds.AppendFormat("explorer.exe {0} \n\n", zippedPatchFile.Replace("//", "/").Replace("/", "\\"));
+        allZipCmds.AppendFormat("explorer.exe {0} \n\n", (PROJECT_DIR + "/Assets/AndroidIl2cppPatchDemo/PrebuiltPatches/").Replace("//", "/").Replace("/", "\\"));
         allZipCmds.AppendFormat("@echo on\n\n"); //explorer as the last line wont return success, so...
 
         if (allZipCmds.Length > 0)
