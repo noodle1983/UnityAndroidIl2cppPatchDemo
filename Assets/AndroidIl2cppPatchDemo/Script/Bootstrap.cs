@@ -10,13 +10,9 @@ public class Bootstrap
     public static extern string get_arch_abi();
 
     [DllImport("bootstrap")]
-    public static extern string get_data_dir();
-
-    [DllImport("bootstrap")]
     public static extern string use_data_dir(string _data_path);
 #else
     public static string get_arch_abi() { return "armeabi-v7a"; }
-    public static string get_data_dir() { return ""; }
     public static string use_data_dir(string _data_path) { return ""; }
 #endif
 
