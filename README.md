@@ -140,3 +140,10 @@ MIT license.
 # 7.联系方式
 
 - 邮件: noodle1983@126.com.
+
+# 8.随缘
+
+[PayPal:https://www.paypal.me/noodle1983](https://www.paypal.me/noodle1983)
+
+Or Alipay:![avatar](https://raw.githubusercontent.com/noodle1983/private/master/qr_icon/noodle1983_ali.png)
+Or Wechat:![avatar](https://raw.githubusercontent.com/noodle1983/private/master/qr_icon/noodle1983_wx.png)
