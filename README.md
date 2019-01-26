@@ -5,7 +5,7 @@
 
 本文接下来将介绍如何去制作热更文件和如何应用这些热更文件。为了简化Demo的设计，Demo包含的热更文件会事先以全量更新的方式制作好，一起打到了Apk里面。具体到项目中热更文件得放服务器，正式上线得放CDN，以增量更新的方式捣鼓出和文中一样的目录结构就OK了。
 
-方案中有个底层库，叫libbootstrap.so，这个是方案里唯一没有开源的部分，属于商业化授权部分，默认仅支持bundle id：com.test.test，可以满足测试需要。
+方案中有个底层库，叫libbootstrap.so，[链接](https://github.com/noodle1983/UnityAndroidIl2cppPatchDemo-libboostrap)，默认仅支持bundle id：com.test.test，其他自己改。
 
 # 2. 方案总览
 
@@ -133,12 +133,9 @@ Unity在以il2cpp方式导出Android工程（或者Apk文件）的时候，代�
 
 另外，打包的工作尽量自动的一键化，一次化，除非你想在打包当晚集体晒月亮。另外，低成本的打包流程，大家都愿意在真机上看结果，利于产品的稳定。Demo其实提供了一套自动化的框架和脚本，理解透，化为己用，也是幸事一件。如果有更好的方式，欢迎讨论。
 
-# 6. 购买
+# 6. 许可
 
-如大家所见，核心的代码都封装在了libbootstrap库中，可以研究，但商业化就不要了，你的时间绝对高于他的价值，不免俗，all rights reserved。
-
-购买链接[
-UnityAndroidIl2cppPatchDemo in Unity Asset Store](https://www.assetstore.unity3d.com/#!/content/131734)，库按bundle id收费，一个购买记录一个bundle id，没其他限制（远不及我们公司薪资最低程序一天的工资，找公司报销吧）。
+MIT license.
 
 # 7.联系方式
 
