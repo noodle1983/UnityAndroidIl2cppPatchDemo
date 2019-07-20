@@ -225,6 +225,7 @@ public class ZipHelper
         if (!strDirectory.EndsWith("/"))
             strDirectory = strDirectory + "/";
 
+        ZipConstants.DefaultCodePage = 0;
         using (ZipInputStream s = new ZipInputStream(new MemoryStream(zipedContent)))
         {
             s.Password = password;
