@@ -240,6 +240,7 @@ public class AndroidBuilder : MonoBehaviour {
 
             allZipCmds.AppendFormat("cd {0} && {1} -8 \"{2}\" \"{3}\"\n", BUILD_SCRIPTS_PATH, ZIP_PATH, PROJECT_DIR + "/AllAndroidPatchFiles/assets_bin_Data/" + zipFileName, filenameInZip);
         }
+        allZipCmds.Append("sleep 1\n");
         allZipCmds.AppendFormat("cd {0} && {1} -9 -r \"{2}\" \"{3}\"\n", patchTopPath, ZIP_PATH, PROJECT_DIR + "/AllAndroidPatchFiles_Versionx.zip", "*");
 
         if (allZipCmds.Length > 0)
