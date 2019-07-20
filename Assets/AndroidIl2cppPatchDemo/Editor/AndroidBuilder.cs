@@ -85,11 +85,15 @@ public class AndroidBuilder : MonoBehaviour {
             return false;
         }
 
-        string ndkPath = EditorPrefs.GetString("AndroidNdkRoot", "");
+        string ndkPath = EditorPrefs.GetString("AndroidNdkRootR16b", "");
         if (string.IsNullOrEmpty(ndkPath))
         {
-            Debug.LogError("ndk path is empty! please config via menu path:Edit/Preference->External tools.");
-            return false;
+            ndkPath = EditorPrefs.GetString("AndroidNdkRoot", "");
+            if (string.IsNullOrEmpty(ndkPath))
+            {
+                Debug.LogError("ndk path is empty! please config via menu path:Edit/Preference->External tools.");
+                return false;
+            }
         }
 
         string buildToolPath = sdkPath + "/build-tools/" + ANDROID_BUILD_TOOLS_VERSION + "/";
