@@ -1,5 +1,5 @@
 rem global
-SET UnityBin="C:\Program Files\Unity2018.2.11f1\Editor\Unity.exe"
+SET UnityBin="C:\Program Files\Unity2018.4.4f1\Editor\Unity.exe"
 
 rem prepare build cmd
 SET ScriptPath=%~dp0
