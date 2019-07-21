@@ -122,8 +122,8 @@ public class AndroidBuilder : MonoBehaviour {
         BuildOptions options = BuildOptions.AcceptExternalModificationsToPlayer;       
         if (Directory.Exists(ANDROID_EXPORT_PATH)) { FileUtil.DeleteFileOrDirectory(ANDROID_EXPORT_PATH);}
         Directory.CreateDirectory(ANDROID_EXPORT_PATH);
-        PlayerSettings.Android.bundleVersionCode = 1;
-        PlayerSettings.bundleVersion = "1.1";
+        PlayerSettings.Android.bundleVersionCode = 2;
+        PlayerSettings.bundleVersion = "1.2";
         try
         {
             error_msg = BuildPipeline.BuildPlayer(levels, ANDROID_EXPORT_PATH, EditorUserBuildSettings.activeBuildTarget, options).summary.result == UnityEditor.Build.Reporting.BuildResult.Succeeded ? string.Empty : "Failed to export project!";
