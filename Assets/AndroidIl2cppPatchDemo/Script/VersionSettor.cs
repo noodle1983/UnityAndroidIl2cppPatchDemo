@@ -75,7 +75,18 @@ public class VersionSettor : MonoBehaviour {
             yield break;
         }
 
-        //5. reboot app
+        //5. clear unity cache
+        string cacheDir = Application.persistentDataPath + "/il2cpp";
+        if (Directory.Exists(cacheDir)) {
+            Directory.Delete(cacheDir);
+        }
+        else
+        {
+            messageBox.Show("pre Unity cached file not found. path:" + cacheDir, "ok", () => { messageBox.Close(); });
+            yield break;
+        }
+
+        //6. reboot app
         yield return StartCoroutine(Restart());
     }
 
