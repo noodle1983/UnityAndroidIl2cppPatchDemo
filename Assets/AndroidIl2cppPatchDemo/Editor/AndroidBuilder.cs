@@ -153,7 +153,7 @@ public class AndroidBuilder : MonoBehaviour {
 
         return true;
     }
-        
+
     [MenuItem("AndroidBuilder/Step 2: Build Il2cpp So", false, 102)]
     public static bool BuildIl2cppSoLib()
     {
