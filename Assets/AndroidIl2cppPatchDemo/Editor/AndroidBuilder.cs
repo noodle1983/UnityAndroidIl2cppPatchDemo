@@ -16,7 +16,7 @@ public class AndroidBuilder : MonoBehaviour {
 
     //-----------------------------------------------------------------------------------
     public static readonly string PROJECT_DIR = Application.dataPath.Substring(0, Application.dataPath.Length - 6);
-    public static readonly string ANDROID_EXPORT_PATH = PROJECT_DIR + "/AndroidGradleProject";
+    public static readonly string ANDROID_EXPORT_PATH = PROJECT_DIR + "/AndroidGradleProject_v1.0";
     public static string ANDROID_PROJECT_PATH { get { return ANDROID_EXPORT_PATH + "/" + PlayerSettings.productName; } }
     public static string ANDROID_MANIFEST_PATH = ANDROID_PROJECT_PATH + "/src/main/";
     public static string JAVA_SRC_PATH = ANDROID_PROJECT_PATH + "/src/main/java/";
