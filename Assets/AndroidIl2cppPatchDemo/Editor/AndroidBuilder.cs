@@ -160,7 +160,7 @@ public class AndroidBuilder : MonoBehaviour {
         if (File.Exists(patchVersion2Zip)) { FileUtil.CopyFileOrDirectory(patchVersion2Zip, androidProjectPatch2Zip); }
         return true;
     }
-        
+
     [MenuItem("AndroidBuilder/Step 2: Build Il2cpp So", false, 102)]
     public static bool BuildIl2cppSoLib()
     {
