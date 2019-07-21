@@ -78,7 +78,7 @@ public class VersionSettor : MonoBehaviour {
         //5. clear unity cache
         string cacheDir = Application.persistentDataPath + "/il2cpp";
         if (Directory.Exists(cacheDir)) {
-            Directory.Delete(cacheDir);
+            DeleteDirectory(cacheDir);
         }
         else
         {
@@ -97,5 +97,26 @@ public class VersionSettor : MonoBehaviour {
         {
             yield return new WaitForSeconds(0.5f);
         }
+    }
+
+    //-----------------------------------------------------------------------------------------------
+
+    public static void DeleteDirectory(string target_dir)
+    {
+        string[] files = Directory.GetFiles(target_dir);
+        string[] dirs = Directory.GetDirectories(target_dir);
+
+        foreach (string file in files)
+        {
+            File.SetAttributes(file, FileAttributes.Normal);
+            File.Delete(file);
+        }
+
+        foreach (string dir in dirs)
+        {
+            DeleteDirectory(dir);
+        }
+
+        Directory.Delete(target_dir, false);
     }
 }
