@@ -141,6 +141,8 @@ public class AndroidBuilder : MonoBehaviour {
         BuildOptions options = BuildOptions.AcceptExternalModificationsToPlayer;       
         if (Directory.Exists(ANDROID_EXPORT_PATH)) { FileUtil.DeleteFileOrDirectory(ANDROID_EXPORT_PATH);}
         Directory.CreateDirectory(ANDROID_EXPORT_PATH);
+        PlayerSettings.Android.bundleVersionCode = 1;
+        PlayerSettings.bundleVersion = "1.1";
         try
         {
 #if UNITY_2018 || UNITY_2019
