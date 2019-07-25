@@ -54,12 +54,12 @@ public class UnityAdsHelper : MonoBehaviour
             Debug.Log(string.Format("Unity Monetization was initialized in {0:F1} seconds.", Time.time - initStartTime));
         }
 
-        {
-            float initStartTime = Time.time;
-            Advertisement.Initialize(androidGameID, enableTestMode);
-            while (!Advertisement.isInitialized) { yield return new WaitForSeconds(0.1f); }
-            Debug.Log(string.Format("Unity Ads was initialized in {0:F1} seconds.", Time.time - initStartTime));
-        }
+        //{
+        //    float initStartTime = Time.time;
+        //    Advertisement.Initialize(androidGameID, enableTestMode);
+        //    while (!Advertisement.isInitialized) { yield return new WaitForSeconds(0.1f); }
+        //    Debug.Log(string.Format("Unity Ads was initialized in {0:F1} seconds.", Time.time - initStartTime));
+        //}
     }
 
     IEnumerator ShowBannerWhenReady()
