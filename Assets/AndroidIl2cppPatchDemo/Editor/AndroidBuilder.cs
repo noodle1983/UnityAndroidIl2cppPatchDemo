@@ -189,11 +189,15 @@ public class AndroidBuilder : MonoBehaviour {
             Debug.Log("UnityPlayerActivity.java already patched.");
             return true;
         }
+        allJavaText = allJavaText.Replace("import android.view.WindowManager;",
+            @"import android.view.WindowManager;
+import io.github.noodle1983.Boostrap;");
 
         allJavaText = allJavaText.Replace("mUnityPlayer = new UnityPlayer(this);",
             @"System.loadLibrary(""main"");
         System.loadLibrary(""unity"");
         System.loadLibrary(""bootstrap"");
+        Boostrap.init(getApplication().getApplicationContext().getFilesDir().getPath());
         mUnityPlayer = new UnityPlayer(this);");
         File.WriteAllText(javaEntranceFile, allJavaText);
         return true;
@@ -296,6 +300,7 @@ public class AndroidBuilder : MonoBehaviour {
         string compileParam = "-d " + JAVA_OBJ_PATH
             + " -source 1.7 -target 1.7 "
             + " -classpath " + string.Join(";", jarLibFiles)
+            + " -sourcepath " + JAVA_SRC_PATH
             + " -bootclasspath "
             + platformJar + " " + string.Join(" ", javaSrcFiles);
         if (!Directory.Exists(JAVA_OBJ_PATH)) { Directory.CreateDirectory(JAVA_OBJ_PATH); }
