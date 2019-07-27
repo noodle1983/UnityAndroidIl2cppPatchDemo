@@ -40,7 +40,7 @@ public class SupportPhoneStat : MonoBehaviour
         string phoneId = SystemInfo.deviceUniqueIdentifier;
         string phoneType = SystemInfo.deviceModel;
         string androidVersion = SystemInfo.operatingSystem;
-        int sceneNumber = 1;
+        int sceneNumber = 2;
         int appVersion = 1;
         int random = UnityEngine.Random.Range(int.MinValue, int.MaxValue);
 
