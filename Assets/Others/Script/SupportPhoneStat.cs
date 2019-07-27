@@ -69,11 +69,15 @@ public class SupportPhoneStat : MonoBehaviour
 
     public static void GetSupportedStat(OnResponse onRsp)
     {
-        if (instance == null) { onRsp(null); return; }
+        if (instance == null) 
+        {
+            Debug.LogError("SupportPhoneStat instance = null");
+            onRsp(null); return; 
+        }
         instance.StartCoroutine(FetchSupportedStat(onRsp)); 
     }
 
-    static IEnumerator FetchSupportedStat(OnResponse onRsp)
+    public static IEnumerator FetchSupportedStat(OnResponse onRsp)
     {
         string req = HOST + "/index.php/PatchRecord/dump_stat";
         UnityWebRequest www = UnityWebRequest.Get(req);
