@@ -64,7 +64,7 @@ public class SupportPhoneStat : MonoBehaviour
         {
             Debug.Log(www.downloadHandler.text);
         }
-        GetSupportedStat((rsp) => { if (rsp != null) { Debug.Log(JsonConvert.SerializeObject(rsp)); } });
+        //GetSupportedStat((rsp) => { if (rsp != null) { Debug.Log(JsonConvert.SerializeObject(rsp)); } });
     }
 
     public static void GetSupportedStat(OnResponse onRsp)
