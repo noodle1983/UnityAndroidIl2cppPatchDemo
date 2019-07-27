@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Web;
@@ -6,13 +7,32 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 
+public class StatRecord
+{
+    public string phone_type;
+    public string android_version;
+    public int app_version;
+    public int enter_scene;
+}
+
+public class StatRsp
+{
+    public int code;
+    public List<StatRecord> data;
+}
+
 public class SupportPhoneStat : MonoBehaviour
 {
+    static readonly string HOST = "http://noodle1983.gz01.bdysite.com";
+    static SupportPhoneStat instance;
+
+    public delegate void OnResponse(StatRsp rsp);
+
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(ReportEnterScene()); 
-        
+        instance = this;
+        StartCoroutine(ReportEnterScene());      
     }
 
     IEnumerator ReportEnterScene() 
@@ -24,7 +44,7 @@ public class SupportPhoneStat : MonoBehaviour
         int appVersion = 1;
         int random = UnityEngine.Random.Range(int.MinValue, int.MaxValue);
 
-        string url = "http://noodle1983.gz01.bdysite.com/index.php/PatchRecord/login?";
+        string url = HOST + "/index.php/PatchRecord/login?";
         string param = "phone_id=" + Uri.EscapeDataString(phoneId)
              + "&phone_type=" + Uri.EscapeDataString(phoneType)
              + "&android_version=" + Uri.EscapeDataString(androidVersion)
@@ -32,10 +52,8 @@ public class SupportPhoneStat : MonoBehaviour
              + "&app_version=" + appVersion 
              + "&rand=" + random;
         string req = url + param;
-        Debug.Log(req);
 
         UnityWebRequest www = UnityWebRequest.Get(req);
-        www.SetRequestHeader("User-Agent", "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36");
         yield return www.SendWebRequest();
 
         if (www.isNetworkError || www.isHttpError)
@@ -44,11 +62,32 @@ public class SupportPhoneStat : MonoBehaviour
         }
         else
         {
-            // Show results as text
             Debug.Log(www.downloadHandler.text);
-
-            // Or retrieve results as binary data
-            byte[] results = www.downloadHandler.data;
         }
+        GetSupportedStat((rsp) => { if (rsp != null) { Debug.Log(JsonConvert.SerializeObject(rsp)); } });
+    }
+
+    public static void GetSupportedStat(OnResponse onRsp)
+    {
+        if (instance == null) { onRsp(null); return; }
+        instance.StartCoroutine(FetchSupportedStat(onRsp)); 
+    }
+
+    static IEnumerator FetchSupportedStat(OnResponse onRsp)
+    {
+        string req = HOST + "/index.php/PatchRecord/dump_stat";
+        UnityWebRequest www = UnityWebRequest.Get(req);
+        yield return www.SendWebRequest();
+
+        if (www.isNetworkError || www.isHttpError)
+        {
+            Debug.Log(www.error);
+            onRsp(null);
+            yield break;
+        }
+
+        Debug.Log(www.downloadHandler.text);
+        StatRsp rsp = JsonConvert.DeserializeObject<StatRsp>(www.downloadHandler.text);
+        onRsp(rsp);
     }
 }
