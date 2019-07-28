@@ -125,7 +125,7 @@ public class AndroidBuilder : MonoBehaviour {
         //build settings
         if (!ValidateConfig()) { return false; }
 
-        PlayerSettings.applicationIdentifier = "com.test.test";
+        PlayerSettings.applicationIdentifier = "cn.noodle1983.unitypatchdemo";
         PlayerSettings.companyName = "Test";
         PlayerSettings.productName = "Test";
         EditorUserBuildSettings.androidBuildSystem = AndroidBuildSystem.Gradle;
