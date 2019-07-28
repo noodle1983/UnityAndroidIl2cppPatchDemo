@@ -16,7 +16,7 @@ rem ============================================================================
 cd %ProjectPath%
 git checkout version1
 del %ProjectPath%\Assets\AndroidIl2cppPatchDemo\PrebuiltPatches\AllAndroidPatchFiles_Version1.zip
-%BuildCmd% -executeMethod AndroidBuilder.BuildPatch
+%BuildCmd% -executeMethod AndroidBuilder.BuildPatch -logFile build_version1.log
 if not exist "%ProjectPath%\Assets\AndroidIl2cppPatchDemo\PrebuiltPatches\AllAndroidPatchFiles_Version1.zip" (
     echo "Build Version1 Failed!"
 	pause
@@ -31,7 +31,7 @@ rem ============================================================================
 cd %ProjectPath%
 git checkout version2
 del %ProjectPath%\Assets\AndroidIl2cppPatchDemo\PrebuiltPatches\AllAndroidPatchFiles_Version2.zip
-%BuildCmd% -executeMethod AndroidBuilder.BuildPatch
+%BuildCmd% -executeMethod AndroidBuilder.BuildPatch -logFile build_version2.log
 if not exist "%ProjectPath%\Assets\AndroidIl2cppPatchDemo\PrebuiltPatches\AllAndroidPatchFiles_Version2.zip" (
     echo "Build Version2 Failed!"
 	pause
@@ -45,7 +45,7 @@ rem ============================================================================
 
 cd %ProjectPath%
 git checkout master
-%BuildCmd% -executeMethod AndroidBuilder.BuildWithoutPatch
+%BuildCmd% -executeMethod AndroidBuilder.BuildWithoutPatch -logFile build_version0.log
 if not exist "%ProjectPath%\AndroidGradleProject\Test\src\main\bin\com.test.test.apk" (
     echo "Build Failed! Please Rerun %ProjectPath%\AndroidGradleProject\Test\src\main\build_apk.bat to check the error."
 	exit -1

@@ -8,7 +8,7 @@ using UnityEngine.Monetization;
 public class UnityAdsHelper : MonoBehaviour
 {
     static string androidGameID = "3228535";
-    static bool enableTestMode = true;
+    static bool enableTestMode = false;
     static bool isInit = false;
 
     string myPlacementId = "";
