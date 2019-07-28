@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Monetization;
 using UnityEngine.SceneManagement;
 
 public class SceneChanger : MonoBehaviour {
@@ -16,7 +17,7 @@ public class SceneChanger : MonoBehaviour {
 
     public void OnClickLoadScene()
     {
-        if (sceneName != "0")
+        if (sceneName != "0" && Monetization.isSupported)
         {
             GetComponent<UnityAdsHelper>().ShowAds("rewardedVideo", (onFinish) =>
             {
