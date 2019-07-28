@@ -189,10 +189,7 @@ public class AndroidBuilder : MonoBehaviour {
 import io.github.noodle1983.Boostrap;");
 
         allJavaText = allJavaText.Replace("mUnityPlayer = new UnityPlayer(this);",
-            @"System.loadLibrary(""main"");
-        System.loadLibrary(""unity"");
-        System.loadLibrary(""bootstrap"");
-        Boostrap.init(getApplication().getApplicationContext().getFilesDir().getPath());
+            @"Boostrap.InitNativeLibBeforeUnityPlay(getApplication().getApplicationContext().getFilesDir().getPath());
         mUnityPlayer = new UnityPlayer(this);");
         File.WriteAllText(javaEntranceFile, allJavaText);
         return true;
