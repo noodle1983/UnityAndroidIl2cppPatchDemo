@@ -16,6 +16,17 @@ public class SceneChanger : MonoBehaviour {
 
     public void OnClickLoadScene()
     {
+        if (sceneName != "0")
+        {
+            GetComponent<UnityAdsHelper>().ShowAds("rewardedVideo", (onFinish) =>
+            {
+                if (onFinish == UnityEngine.Monetization.ShowResult.Finished)
+                {
+                    SceneManager.LoadScene(sceneName);
+                }
+            });
+            return;
+        }
         SceneManager.LoadScene(sceneName);
     }
     
