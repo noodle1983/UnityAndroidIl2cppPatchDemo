@@ -24,7 +24,7 @@ public class StatRecordUI : MonoBehaviour
             return;
         }
 
-        phoneType.text = statRecord.phone_type + " (" + statRecord.android_version + ")";
+        phoneType.text = statRecord.phone_type + "\n(" + statRecord.android_version + ")";
         int enterSceneBits = statRecord.enter_scene;
         StringBuilder enterSceneStr = new StringBuilder();
         for (int i = 0; i < 3; i++)
