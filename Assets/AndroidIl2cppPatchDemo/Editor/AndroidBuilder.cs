@@ -126,8 +126,8 @@ public class AndroidBuilder : MonoBehaviour {
         if (!ValidateConfig()) { return false; }
 
         PlayerSettings.applicationIdentifier = "cn.noodle1983.unitypatchdemo";
-        PlayerSettings.companyName = "Test";
-        PlayerSettings.productName = "Test";
+        PlayerSettings.companyName = "noodle1983";
+        PlayerSettings.productName = "UnityAndroidIl2cppPatchDemo";
         EditorUserBuildSettings.androidBuildSystem = AndroidBuildSystem.Gradle;
         PlayerSettings.SetScriptingBackend(BuildTargetGroup.Android, ScriptingImplementation.IL2CPP);
         PlayerSettings.stripEngineCode = false;
