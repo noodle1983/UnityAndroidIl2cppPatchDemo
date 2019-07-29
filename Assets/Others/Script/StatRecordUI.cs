@@ -37,7 +37,7 @@ public class StatRecordUI : MonoBehaviour
         if (enterSceneStr.Length > 0) { enterSceneStr.Remove(enterSceneStr.Length - 1, 1); }
         enterScene.text = enterSceneStr.ToString();
 
-        enterScene.color = enterSceneBits == 7 ? Color.green : Color.yellow;
+        enterScene.color = ((enterSceneBits & (1 << 2)) != 0) ? Color.green : Color.yellow;
         phoneType.color = enterScene.color;
     }
 
