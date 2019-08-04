@@ -10,10 +10,10 @@ public class Bootstrap
     public static extern string get_arch_abi();
 
     [DllImport("bootstrap")]
-    public static extern string use_data_dir(string _data_path);
+    public static extern string use_data_dir(string _data_path, string _apk_path);
 #else
     public static string get_arch_abi() { return "armeabi-v7a"; }
-    public static string use_data_dir(string _data_path) { return ""; }
+    public static string use_data_dir(string _data_path, string _apk_path) { return ""; }
 #endif
 
     public static void reboot_app()
