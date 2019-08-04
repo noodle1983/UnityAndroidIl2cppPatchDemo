@@ -23,7 +23,7 @@ public class VersionSettor : MonoBehaviour {
 
         if (updateVersion <= 0)
         {
-            string error = Bootstrap.use_data_dir("");
+            string error = Bootstrap.use_data_dir("", "");
             if (!string.IsNullOrEmpty(error))
             {
                 messageBox.Show("use failed. empty path error:" + error, "ok", ()=> { messageBox.Close(); });
@@ -68,7 +68,16 @@ public class VersionSettor : MonoBehaviour {
         ZipHelper.UnZip(zipLibil2cppPath, runtimePatchPath, "", true);
 
         //4. tell libboostrap.so to use the right patch after reboot
-        string error = Bootstrap.use_data_dir(runtimePatchPath);
+        //jar:file:///data/app/x.x.x/base.apk!/assets/
+        int apkPathStart = Application.streamingAssetsPath.IndexOf("/data");
+        int apkPathEnd = Application.streamingAssetsPath.IndexOf("!");
+        string apkPath = Application.streamingAssetsPath.Substring(apkPathStart,apkPathEnd - apkPathStart);
+        if (string.IsNullOrEmpty(apkPath))
+        {
+            messageBox.Show("use failed. apk path not found in [" + Application.streamingAssetsPath + "]", "ok", () => { messageBox.Close(); });
+            yield break;
+        }
+        string error = Bootstrap.use_data_dir(runtimePatchPath, apkPath);
         if (!string.IsNullOrEmpty(error))
         {
             messageBox.Show("use failed. path:" + zipLibil2cppPath + ", error:" + error, "ok", () => { messageBox.Close(); });
