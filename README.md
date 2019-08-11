@@ -5,7 +5,7 @@
 
 本文接下来将介绍如何去制作热更文件和如何应用这些热更文件。为了简化Demo的设计，Demo包含的热更文件会事先以全量更新的方式制作好，一起打到了Apk里面。具体到项目中热更文件得放服务器，正式上线得放CDN，以增量更新的方式捣鼓出和文中一样的目录结构就OK了。
 
-方案中有个底层库，叫libbootstrap.so，[链接](https://github.com/noodle1983/UnityAndroidIl2cppPatchDemo-libboostrap)，默认仅支持bundle id：com.test.test，其他自己改。
+方案中有个底层库，叫libbootstrap.so，[链接](https://github.com/noodle1983/UnityAndroidIl2cppPatchDemo-libboostrap)，默认仅支持bundle id：cn.noodle1983.unitypatchdemo，需要自己改成自己的bundle_id。
 
 # 2. 方案总览
 
@@ -72,11 +72,13 @@ Unity在以il2cpp方式导出Android工程（或者Apk文件）的时候，代�
 
 ![运行时流程图](https://github.com/noodle1983/private/raw/master/UnityAndroidIl2cppPatch/patch_workflow.png)
 
-打包过程2里，在Unity的游戏逻辑之前，插入了三行Java代码。
+打包过程2里，需要在UnityPlayerActivity.java文件头导入一个库，在Unity的游戏逻辑之前，插入了一行Java代码。
 ```
-+        System.loadLibrary("main");
-+        System.loadLibrary("unity");
-+        System.loadLibrary("bootstrap");
+        import android.view.WindowManager;
++       import io.github.noodle1983.Boostrap;
+```
+```
++       Boostrap.InitNativeLibBeforeUnityPlay(getApplication().getApplicationContext().getFilesDir().getPath());
         mUnityPlayer = new UnityPlayer(this);
 ```
 这三行代码保证了上图中步骤1-2能在步骤3之前执行，下一行mUnityPlayer的代码即开始了步骤3的执行。步骤3之后所有的逻辑，都是已热更过的il2cpp库里的Unity Script（c#，...）了。热更部分的逻辑如果有修改，会在热更后体现，如果这部分的bug不影响下次热更，则可以通过热更修复，否则应指引用户清除本地数据，以母包热更逻辑更新到最新。所以，在方案的应用中，仍需尽量保证热更部分的代码稳定，不能随意更改。
@@ -107,10 +109,10 @@ Unity在以il2cpp方式导出Android工程（或者Apk文件）的时候，代�
 
 ### 依赖
 
-*	Unity (我用Unity2017/Unity2018)
+*	Unity (我用Unity2017/Unity2018/Unity2019)
 *	JDK.(我用JDK1.8)
 *	Android SDK.(我用Android SDK platform 23 和 build tools 26.0.2（低于26.0.2，Unity2018不支持），最好是这两个版本，不然得重新下载)
-*	Android NDK r13b. (Unity il2cpp原来只支持这个版本，现在不知道放开没，反正这个版本没问题)
+*	Android NDK r16b. 
 *	Git 
 	
 ### Build指引
@@ -137,11 +139,18 @@ Unity在以il2cpp方式导出Android工程（或者Apk文件）的时候，代�
 
 MIT license.
 
-# 7.联系方式
+# 7. 插件成熟情况
+最近在支持一款Google Play的游戏，具体可以看issue列表。
+适配了部分手机的路径问题和加入了对aab格式包的支持。
+目前还碰到下面这个问题，还在跟进中。
+E/MtpStorageManager: java.nio.file.NoSuchFileException: /storage/emulated/0/Android/data/com.kingstar.harbingers.gp/files/il2cpp_tmp/Metadata_tmp
+
+# 8.联系方式
 
 - 邮件: noodle1983@126.com.
+- Q群：593413410（广告免扰）
 
-# 8.随缘
+# 9.随缘
 
 [PayPal:https://www.paypal.me/noodle1983](https://www.paypal.me/noodle1983)
 

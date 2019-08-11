@@ -68,15 +68,18 @@ public class VersionSettor : MonoBehaviour {
         ZipHelper.UnZip(zipLibil2cppPath, runtimePatchPath, "", true);
 
         //4. tell libboostrap.so to use the right patch after reboot
+
+        //!!!! wrong streamingAssetsPath in Google aab
         //jar:file:///data/app/x.x.x/base.apk!/assets/
-        int apkPathStart = Application.streamingAssetsPath.IndexOf("/data");
-        int apkPathEnd = Application.streamingAssetsPath.IndexOf("!");
-        string apkPath = Application.streamingAssetsPath.Substring(apkPathStart,apkPathEnd - apkPathStart);
-        if (string.IsNullOrEmpty(apkPath))
-        {
-            messageBox.Show("use failed. apk path not found in [" + Application.streamingAssetsPath + "]", "ok", () => { messageBox.Close(); });
-            yield break;
-        }
+        //int apkPathStart = Application.streamingAssetsPath.IndexOf("/data");
+        //int apkPathEnd = Application.streamingAssetsPath.IndexOf("!");
+        //string apkPath = Application.streamingAssetsPath.Substring(apkPathStart,apkPathEnd - apkPathStart);
+        //if (string.IsNullOrEmpty(apkPath))
+        //{
+        //    messageBox.Show("use failed. apk path not found in [" + Application.streamingAssetsPath + "]", "ok", () => { messageBox.Close(); });
+        //    yield break;
+        //}
+        string apkPath = "";
         string error = Bootstrap.use_data_dir(runtimePatchPath, apkPath);
         if (!string.IsNullOrEmpty(error))
         {
