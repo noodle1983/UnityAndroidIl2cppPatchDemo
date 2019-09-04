@@ -115,20 +115,27 @@ public class VersionSettor : MonoBehaviour {
 
     public static void DeleteDirectory(string target_dir)
     {
-        string[] files = Directory.GetFiles(target_dir);
-        string[] dirs = Directory.GetDirectories(target_dir);
-
-        foreach (string file in files)
+        try
         {
-            File.SetAttributes(file, FileAttributes.Normal);
-            File.Delete(file);
-        }
+            string[] files = Directory.GetFiles(target_dir);
+            string[] dirs = Directory.GetDirectories(target_dir);
 
-        foreach (string dir in dirs)
+            foreach (string file in files)
+            {
+                File.SetAttributes(file, FileAttributes.Normal);
+                File.Delete(file);
+            }
+
+            foreach (string dir in dirs)
+            {
+                DeleteDirectory(dir);
+            }
+
+            Directory.Delete(target_dir, false);
+        }
+        catch(System.Exception e)
         {
-            DeleteDirectory(dir);
+            Debug.LogException(e);
         }
-
-        Directory.Delete(target_dir, false);
     }
 }
