@@ -13,9 +13,7 @@ public class UnityAssetStoreNavigator : MonoBehaviour {
 
     public void OnClickOpenURL()
     {
-        GetComponent<UnityAdsHelper>().ShowAds("rewardedVideo", (onFinish) => {if (onFinish == UnityEngine.Monetization.ShowResult.Finished ){
-            Application.OpenURL("http://u3d.as/1mmM");
-        }});
+        Application.OpenURL("http://u3d.as/1mmM");
     }
     
 }
