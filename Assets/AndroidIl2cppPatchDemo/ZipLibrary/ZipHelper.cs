@@ -1,10 +1,11 @@
 #if UNITY_IPHONE
+using UnityEngine;
 public class ZipHelper
 {
-	public static void ZipFile(string fileToZip, string filePathInZip, string zipedFile, int compressionLevel){SGameEngine.SGameLog.log_error("[ZipHelper](ZipFile)you are in the hell");}
-	public static void ZipFile(string fileToZip, string zipedFile){SGameEngine.SGameLog.log_error("[ZipHelper](ZipFile)you are in the hell");}
-	public static void ZipFileDirectory(string strDirectory, string zipedFile){SGameEngine.SGameLog.log_error("[ZipHelper](ZipFileDirectory)you are in the hell");}
-	public static void UnZip(string zipedFile, string strDirectory, string password, bool overWrite){SGameEngine.SGameLog.log_error("[ZipHelper](UnZip)you are in the hell");}
+	public static void ZipFile(string fileToZip, string filePathInZip, string zipedFile, int compressionLevel){Debug.LogError("[ZipHelper](ZipFile)you are in the hell");}
+	public static void ZipFile(string fileToZip, string zipedFile){ Debug.LogError("[ZipHelper](ZipFile)you are in the hell");}
+	public static void ZipFileDirectory(string strDirectory, string zipedFile){ Debug.LogError("[ZipHelper](ZipFileDirectory)you are in the hell");}
+	public static void UnZip(string zipedFile, string strDirectory, string password, bool overWrite){ Debug.LogError("[ZipHelper](UnZip)you are in the hell");}
 
 }
 #else
