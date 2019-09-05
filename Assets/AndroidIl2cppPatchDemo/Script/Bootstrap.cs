@@ -24,7 +24,8 @@ public class Bootstrap
 
             AndroidJavaObject pm = current_activity.Call<AndroidJavaObject>("getPackageManager");
             AndroidJavaObject intent = pm.Call<AndroidJavaObject>("getLaunchIntentForPackage", Application.identifier);
-            intent.Call<AndroidJavaObject>("setFlags", 0x20000000);//Intent.FLAG_ACTIVITY_SINGLE_TOP
+            //intent.Call<AndroidJavaObject>("setFlags", 0x20000000);//Intent.FLAG_ACTIVITY_SINGLE_TOP
+            intent.Call<AndroidJavaObject>("setFlags", 0x04000000 | 0x00008000 | 0x10000000);//Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK
 
             AndroidJavaClass pending_intent = new AndroidJavaClass("android.app.PendingIntent");
             AndroidJavaObject content_intent = pending_intent.CallStatic<AndroidJavaObject>("getActivity", current_activity, 0, intent, 0x8000000); //PendingIntent.FLAG_UPDATE_CURRENT = 134217728 [0x8000000]
