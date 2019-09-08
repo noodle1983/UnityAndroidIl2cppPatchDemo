@@ -23,7 +23,7 @@ public class StatRsp
 
 public class SupportPhoneStat : MonoBehaviour
 {
-    static readonly string HOST = "http://noodle1983.gz01.bdysite.com";
+    static readonly string HOST = "http://unitypatchdemo.noodle1983.cn";
     static SupportPhoneStat instance;
 
     public delegate void OnResponse(StatRsp rsp);
