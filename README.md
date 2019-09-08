@@ -16,7 +16,7 @@ Unity在以il2cpp方式导出Android工程（或者Apk文件）的时候，代�
 ![运行时流程图](https://github.com/noodle1983/private/raw/master/UnityAndroidIl2cppPatch/patch_workflow.png)
 
 流程说明：
-* 步骤1，在Unity的逻辑之前，libbootstrap会检查本地是否有Patch. Apk安装后，没应用过任何热更，本地是不会有Patch文件的，走no流程。如果热更过，则会有Patch目录，走yes流程。Patch目录如何准备，后面会将到。
+* 步骤1，在Unity的逻辑之前，libbootstrap会检查本地是否有Patch. Apk安装后，没应用过任何热更，本地是不会有Patch文件的，走no流程。如果热更过，则会有Patch目录，走yes流程。如果是覆盖安装，会检查apk和Patch文件的修改时间，走no流程。Patch目录如何准备，后面会将到。
 * 步骤2，加载Patch目录对应架构（arm/x86）的libil2cpp库，并应用assets目录的更新文件。
 * 步骤3，开始Unity的流程，进入Unity第一个场景，并执行相关的Unity Script，一般是C#，我们都以C#举例。
 * 步骤4，检查服务端是否有新的patch，这步demo没有演示，需要自己实现。
@@ -139,18 +139,27 @@ Unity在以il2cpp方式导出Android工程（或者Apk文件）的时候，代�
 
 MIT license.
 
-# 7. 插件成熟情况
-最近在支持一款Google Play的游戏，具体可以看issue列表。
-适配了部分手机的路径问题和加入了对aab格式包的支持。
-目前还碰到下面这个问题，还在跟进中。
-E/MtpStorageManager: java.nio.file.NoSuchFileException: /storage/emulated/0/Android/data/com.kingstar.harbingers.gp/files/il2cpp_tmp/Metadata_tmp
 
-# 8.联系方式
+# 7.主要贡献
+* 1. [noodle1983(Noodle)](https://github.com/noodle1983)完成了第一版， MIT开源
+* 2. [DesperateZero(_DespAir.)](https://github.com/DesperateZero)贡献了首次上线机会，协助解决了一下问题
+	- 文件句柄泄漏
+	- 适配：oppo手机，/data/data/appid/files 访问不了
+	- Google abb打包的适配问题（原因是abb的方式会有多个apk包，原来是patch第一个，目前方案是patch含路径asset/bin/Data的那个）
+* 3. [qq：墨(2900180710)<abram_ped@126.com>]发现并解决了原读写锁不生效的问题，测试文件[test_mutex.cpp](https://github.com/noodle1983/UnityAndroidIl2cppPatchDemo-libboostrap/blob/master/unittest/test_mutex.cpp)
+* 4. [sisong(e侯子.net)](https://github.com/sisong)实现了基于hook和ApkDiffPatch的另一种实现方式，实现了mono和Unity版本的热更，并做了大量的机型和各个API Level的测试。[项目地址](https://github.com/sisong/UnityAndroidHotUpdate)
+
+作为这个想法的最初实践者，我想说，我也很放心在之后的项目里应用这套方案了。
+
+# 8.遗留问题
+见[Github Issues](https://github.com/noodle1983/UnityAndroidIl2cppPatchDemo/issues)
+
+# 9.支持
 
 - 邮件: noodle1983@126.com.
 - Q群：593413410（广告免扰）
 
-# 9.随缘
+# 10.随缘
 
 [PayPal:https://www.paypal.me/noodle1983](https://www.paypal.me/noodle1983)
 
