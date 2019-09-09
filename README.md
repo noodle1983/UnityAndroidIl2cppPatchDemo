@@ -151,8 +151,11 @@ MIT license.
 
 作为这个想法的最初实践者，我想说，我也很放心在之后的项目里应用这套方案了。
 
-# 8.遗留问题
-见[Github Issues](https://github.com/noodle1983/UnityAndroidIl2cppPatchDemo/issues)
+# 8.调试和遗留问题
+* 1. 集成中如果有问题，先看看Demo的[release版本](https://github.com/noodle1983/UnityAndroidIl2cppPatchDemo/releases)有没有问题。如果Demo有问题，直接找我吧，QQ或邮件都行。
+* 2. 如果感兴趣，可以在[log.h](https://github.com/noodle1983/UnityAndroidIl2cppPatchDemo-libboostrap/blob/master/log.h)里，把日志全开，会有一些很有意思的日志，对理解原理和调试都很有用。
+* 3. Q群：593413410
+* 4. 遗留问题见[Github Issues](https://github.com/noodle1983/UnityAndroidIl2cppPatchDemo/issues)
 
 # 9.支持
 
