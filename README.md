@@ -103,7 +103,7 @@ Unity在以il2cpp方式导出Android工程（或者Apk文件）的时候，代�
 ## 4.1. Verify
 安装预编译的Apk文件，点击按钮可以切换各个版本。
 
-[Apk链接](https://github.com/noodle1983/UnityAndroidIl2cppPatchDemo/releases/download/v2.1/UnityAndroidIl2cppPatchDemo.apk)
+[release版本](https://github.com/noodle1983/UnityAndroidIl2cppPatchDemo/releases)
 
 ## 4.2. Build
 
