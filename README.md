@@ -5,7 +5,7 @@
 
 本文接下来将介绍如何去制作热更文件和如何应用这些热更文件。为了简化Demo的设计，Demo包含的热更文件会事先以全量更新的方式制作好，一起打到了Apk里面。具体到项目中热更文件得放服务器，正式上线得放CDN，以增量更新的方式捣鼓出和文中一样的目录结构就OK了。
 
-方案中有个底层库，叫libbootstrap.so，[链接](https://github.com/noodle1983/UnityAndroidIl2cppPatchDemo-libboostrap)，默认仅支持bundle id：cn.noodle1983.unitypatchdemo，需要自己改成自己的bundle_id。
+Demo代码适用Unity2018-？，2017需要自己看版本历史回退Zip库。
 
 # 2. 方案总览
 
@@ -149,7 +149,9 @@ MIT license.
 * 3. [qq：墨(2900180710)<abram_ped@126.com>]发现并解决了原读写锁不生效的问题，测试文件[test_mutex.cpp](https://github.com/noodle1983/UnityAndroidIl2cppPatchDemo-libboostrap/blob/master/unittest/test_mutex.cpp)
 * 4. [sisong(e侯子.net)](https://github.com/sisong)实现了基于hook和ApkDiffPatch的另一种实现方式，实现了mono和Unity版本的热更，并做了大量的机型和各个API Level的测试。[项目地址](https://github.com/sisong/UnityAndroidHotUpdate)
 
-作为这个想法的最初实践者，我想说，我也很放心在之后的项目里应用这套方案了。
+* 5. qq：木子(406351314)、西's my baby(871967866)<quange0314@163.com>团队和Sin(446541451)yudimo@vip.qq.com团队，帮忙发现和验证随机崩溃问题：https://github.com/noodle1983/UnityAndroidIl2cppPatchDemo/issues/12
+
+* 6. qq：Enough.(1098839800) 实践文档：[通过IL2CPP热更代码](https://www.jianshu.com/p/7b205ebcb54a)
 
 # 8.调试和遗留问题
 * 1. 集成中如果有问题，先看看Demo的[release版本](https://github.com/noodle1983/UnityAndroidIl2cppPatchDemo/releases)有没有问题。如果Demo有问题，直接找我吧，QQ或邮件都行。
