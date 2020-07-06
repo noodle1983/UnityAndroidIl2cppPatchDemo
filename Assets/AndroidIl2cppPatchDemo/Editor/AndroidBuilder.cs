@@ -132,7 +132,7 @@ public class AndroidBuilder : MonoBehaviour {
         PlayerSettings.SetScriptingBackend(BuildTargetGroup.Android, ScriptingImplementation.IL2CPP);
         PlayerSettings.stripEngineCode = false;
 #if UNITY_2018 || UNITY_2019
-        PlayerSettings.Android.targetArchitectures = AndroidArchitecture.ARMv7 | AndroidArchitecture.X86 | AndroidArchitecture.ARM64;
+        PlayerSettings.Android.targetArchitectures = AndroidArchitecture.ARMv7 | AndroidArchitecture.ARM64;
 #endif
 
         //export project
@@ -193,9 +193,9 @@ public class AndroidBuilder : MonoBehaviour {
             @"import android.view.WindowManager;
 import io.github.noodle1983.Boostrap;");
 
-        allJavaText = allJavaText.Replace("mUnityPlayer = new UnityPlayer(this);",
+        allJavaText = allJavaText.Replace("mUnityPlayer = new UnityPlayer(this,this);",
             @"Boostrap.InitNativeLibBeforeUnityPlay(getApplication().getApplicationContext().getFilesDir().getPath());
-        mUnityPlayer = new UnityPlayer(this);");
+        mUnityPlayer = new UnityPlayer(this,this);");
         File.WriteAllText(javaEntranceFile, allJavaText);
         return true;
     }
@@ -215,7 +215,7 @@ import io.github.noodle1983.Boostrap;");
         {
                 // path_in_android_project, filename inside zip, zip file anme
                 new string[3]{ "/"+ SO_DIR_NAME + "/armeabi-v7a/libil2cpp.so", "libil2cpp.so.new", "lib_armeabi-v7a_libil2cpp.so.zip" },
-                new string[3]{ "/"+ SO_DIR_NAME + "/x86/libil2cpp.so", "libil2cpp.so.new", "lib_x86_libil2cpp.so.zip" },
+                //new string[3]{ "/"+ SO_DIR_NAME + "/x86/libil2cpp.so", "libil2cpp.so.new", "lib_x86_libil2cpp.so.zip" },
 #if UNITY_2018 || UNITY_2019              
                 new string[3]{ "/"+ SO_DIR_NAME + "/arm64-v8a/libil2cpp.so", "libil2cpp.so.new", "lib_arm64-v8a_libil2cpp.so.zip" },
 #endif
@@ -316,13 +316,13 @@ import io.github.noodle1983.Boostrap;");
         if (Directory.Exists(outputLibPath)) { FileUtil.DeleteFileOrDirectory(outputLibPath); }
         Directory.CreateDirectory(outputLibPath);
         FileUtil.ReplaceDirectory(SO_LIB_PATH + "/armeabi-v7a", outputLibPath + "/armeabi-v7a");
-        FileUtil.ReplaceDirectory(SO_LIB_PATH + "/x86", outputLibPath + "/x86");
+        //FileUtil.ReplaceDirectory(SO_LIB_PATH + "/x86", outputLibPath + "/x86");
 #if UNITY_2018 || UNITY_2019
         FileUtil.ReplaceDirectory(SO_LIB_PATH + "/arm64-v8a", outputLibPath + "/arm64-v8a");
         FileUtil.DeleteFileOrDirectory(outputLibPath + "/arm64-v8a/Data");
 #endif
         FileUtil.DeleteFileOrDirectory(outputLibPath + "/armeabi-v7a/Data");
-        FileUtil.DeleteFileOrDirectory(outputLibPath + "/x86/Data");
+        //FileUtil.DeleteFileOrDirectory(outputLibPath + "/x86/Data");
         var debug_files = Directory.GetFiles(outputLibPath, "*.*", SearchOption.AllDirectories).Where(s => s.EndsWith(".debug") || s.EndsWith(".map") || s.EndsWith(".sym"));
         foreach (string file in debug_files) { File.Delete(file); }
 
