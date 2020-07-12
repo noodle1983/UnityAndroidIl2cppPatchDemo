@@ -17,18 +17,20 @@ public class AndroidBuilder : MonoBehaviour {
     //-----------------------------------------------------------------------------------
     public static readonly string PROJECT_DIR = Application.dataPath.Substring(0, Application.dataPath.Length - 6);
     public static readonly string ANDROID_EXPORT_PATH = PROJECT_DIR + "/AndroidGradleProject_v1.0";
-    public static string ANDROID_PROJECT_PATH { get { return ANDROID_EXPORT_PATH + "/" + PlayerSettings.productName; } }
-    public static string ANDROID_MANIFEST_PATH = ANDROID_PROJECT_PATH + "/src/main/";
-    public static string JAVA_SRC_PATH = ANDROID_PROJECT_PATH + "/src/main/java/";
-    public static string JAR_LIB_PATH = ANDROID_PROJECT_PATH + "/libs/";
+    public static string ANDROID_PROJECT_PATH { get { return ANDROID_EXPORT_PATH; } }
+    public static string ANDROID_MANIFEST_PATH = ANDROID_PROJECT_PATH + "/unityLibrary/src/main/";
+    public static string JAVA_SRC_PATH = ANDROID_PROJECT_PATH + "/unityLibrary/src/main/java/";
+    public static string JAR_LIB_PATH = ANDROID_PROJECT_PATH + "/unityLibrary/libs/";
     public static string SO_DIR_NAME = "jniLibs";
-    public static string SO_LIB_PATH = ANDROID_PROJECT_PATH + "/src/main/jniLibs/";
-    public static string EXPORTED_ASSETS_PATH = ANDROID_PROJECT_PATH + "/src/main/assets";
-    public static string R_JAVA_PATH = ANDROID_PROJECT_PATH + "/src/main/gen/";
-    public static string RES_PATH = ANDROID_PROJECT_PATH + "/src/main/res";
-    public static string MANIFEST_XML_PATH = ANDROID_PROJECT_PATH + "/src/main/AndroidManifest.xml";
-    public static string JAVA_OBJ_PATH = ANDROID_PROJECT_PATH + "/src/main/objs/";
-    public static string BUILD_SCRIPTS_PATH = ANDROID_PROJECT_PATH + "/src/main/";
+    public static string SO_LIB_PATH = ANDROID_PROJECT_PATH + "/unityLibrary/src/main/jniLibs/";
+    public static string EXPORTED_ASSETS_PATH = ANDROID_PROJECT_PATH + "/unityLibrary/src/main/assets";
+    public static string R_JAVA_PATH = ANDROID_PROJECT_PATH + "/unityLibrary/src/main/gen/";
+    public static string LAUNCHER_RES_PATH = ANDROID_PROJECT_PATH + "/launcher/src/main/res";
+    public static string LAUNCHER_MANIFEST_XML_PATH = ANDROID_PROJECT_PATH + "/launcher/src/main/AndroidManifest.xml";
+    public static string RES_PATH = ANDROID_PROJECT_PATH + "/unityLibrary/src/main/res";
+    public static string MANIFEST_XML_PATH = ANDROID_PROJECT_PATH + "/unityLibrary/src/main/AndroidManifest.xml";
+    public static string JAVA_OBJ_PATH = ANDROID_PROJECT_PATH + "/unityLibrary/src/main/objs/";
+    public static string BUILD_SCRIPTS_PATH = ANDROID_PROJECT_PATH + "/unityLibrary/src/main/";
     public static string ZIP_PATH = PROJECT_DIR + "/Assets/AndroidIl2cppPatchDemo/Editor/Exe/zip.exe";
 
     static bool Exec(string filename, string args)
@@ -131,9 +133,7 @@ public class AndroidBuilder : MonoBehaviour {
         EditorUserBuildSettings.androidBuildSystem = AndroidBuildSystem.Gradle;
         PlayerSettings.SetScriptingBackend(BuildTargetGroup.Android, ScriptingImplementation.IL2CPP);
         PlayerSettings.stripEngineCode = false;
-#if UNITY_2018 || UNITY_2019
-        PlayerSettings.Android.targetArchitectures = AndroidArchitecture.ARMv7 | AndroidArchitecture.X86 | AndroidArchitecture.ARM64;
-#endif
+        PlayerSettings.Android.targetArchitectures = AndroidArchitecture.ARMv7 | AndroidArchitecture.ARM64;
 
         //export project
         string error_msg = string.Empty;
@@ -143,11 +143,7 @@ public class AndroidBuilder : MonoBehaviour {
         Directory.CreateDirectory(ANDROID_EXPORT_PATH);
         try
         {
-#if UNITY_2018 || UNITY_2019
             error_msg = BuildPipeline.BuildPlayer(levels, ANDROID_EXPORT_PATH, EditorUserBuildSettings.activeBuildTarget, options).summary.result == UnityEditor.Build.Reporting.BuildResult.Succeeded ? string.Empty : "Failed to export project!";
-#else
-            error_msg = BuildPipeline.BuildPlayer(levels, ANDROID_EXPORT_PATH, EditorUserBuildSettings.activeBuildTarget, options);
-#endif
         }
         catch (Exception e)
         {
@@ -179,7 +175,7 @@ public class AndroidBuilder : MonoBehaviour {
         }
         string javaEntranceFile = javaEntranceFiles[0];
         string allJavaText = File.ReadAllText(javaEntranceFile);
-        if (allJavaText.IndexOf("bootstrap") > 0)
+        if (allJavaText.IndexOf("noodle1983") > 0)
         {
             Debug.Log("UnityPlayerActivity.java already patched.");
             return true;
@@ -188,9 +184,9 @@ public class AndroidBuilder : MonoBehaviour {
             @"import android.view.WindowManager;
 import io.github.noodle1983.Boostrap;");
 
-        allJavaText = allJavaText.Replace("mUnityPlayer = new UnityPlayer(this);",
+        allJavaText = allJavaText.Replace("mUnityPlayer = new UnityPlayer(this,this);",
             @"Boostrap.InitNativeLibBeforeUnityPlay(getApplication().getApplicationContext().getFilesDir().getPath());
-        mUnityPlayer = new UnityPlayer(this);");
+        mUnityPlayer = new UnityPlayer(this,this);");
         File.WriteAllText(javaEntranceFile, allJavaText);
         return true;
     }
@@ -209,11 +205,8 @@ import io.github.noodle1983.Boostrap;");
         string[][] soPatchFile =
         {
                 // path_in_android_project, filename inside zip, zip file anme
-                new string[3]{ "/"+ SO_DIR_NAME + "/armeabi-v7a/libil2cpp.so", "libil2cpp.so.new", "lib_armeabi-v7a_libil2cpp.so.zip" },
-                new string[3]{ "/"+ SO_DIR_NAME + "/x86/libil2cpp.so", "libil2cpp.so.new", "lib_x86_libil2cpp.so.zip" },
-#if UNITY_2018 || UNITY_2019              
+                new string[3]{ "/"+ SO_DIR_NAME + "/armeabi-v7a/libil2cpp.so", "libil2cpp.so.new", "lib_armeabi-v7a_libil2cpp.so.zip" },            
                 new string[3]{ "/"+ SO_DIR_NAME + "/arm64-v8a/libil2cpp.so", "libil2cpp.so.new", "lib_arm64-v8a_libil2cpp.so.zip" },
-#endif
         };
 
         for (int i = 0; i < soPatchFile.Length; i++)
@@ -246,7 +239,8 @@ import io.github.noodle1983.Boostrap;");
 
         if (allZipCmds.Length > 0)
         {
-            string zipPatchesFile = BUILD_SCRIPTS_PATH + "/" + "zip_patches.bat";
+            string zipPatchesFile = ANDROID_EXPORT_PATH + "/" + "zip_patches.bat";
+            File.WriteAllText(zipPatchesFile, allZipCmds.ToString());
             File.WriteAllText(zipPatchesFile, allZipCmds.ToString());
             if (!Exec(zipPatchesFile, zipPatchesFile))
             {
@@ -260,79 +254,22 @@ import io.github.noodle1983.Boostrap;");
     [MenuItem("AndroidBuilder/Step 4: Generate Build Scripts", false, 104)]
     public static bool GenerateBuildScripts()
     {
-        string sdkPath = EditorPrefs.GetString("AndroidSdkRoot", "");
         string jdkPath = EditorPrefs.GetString("JdkPath", ""); ;
-        if (string.IsNullOrEmpty(sdkPath) || string.IsNullOrEmpty(jdkPath))
+        if (string.IsNullOrEmpty(jdkPath))
         {
-            Debug.LogError("sdk/jdk path is empty! please config via menu path:Edit/Preference->External tools.");
+            Debug.LogError("jdk path is empty! please config via menu path:Edit/Preference->External tools.");
             return false;
         }
 
-        StringBuilder allCmd = new StringBuilder();
-
-        // gen R.java
-        string buildToolPath = sdkPath + "/build-tools/" + ANDROID_BUILD_TOOLS_VERSION + "/";
-        string aaptPath = buildToolPath + "/aapt.exe";
-        string platformJar = sdkPath + "/platforms/" + ANDROID_PLATFORM +  "/android.jar";
-        string genRJavaCmd = " package -f -m "
-            + " -J " + R_JAVA_PATH
-            + " -M " + MANIFEST_XML_PATH
-            + " -S " + RES_PATH
-            + " -I " + platformJar;
-        if (!Directory.Exists(R_JAVA_PATH)) { Directory.CreateDirectory(R_JAVA_PATH); }
-        allCmd.AppendFormat("call \"{0}\" {1}\n\n", aaptPath, genRJavaCmd);
-
-        //build java
-        string javacPath = jdkPath + "/bin/javac.exe";
-        string[] jarLibFiles = Directory.GetFiles(JAR_LIB_PATH, "*.jar", SearchOption.AllDirectories);
-        string[] javaSrcFiles = Directory.GetFiles(ANDROID_PROJECT_PATH, "*.java", SearchOption.AllDirectories);
-        string compileParam = "-d " + JAVA_OBJ_PATH
-            + " -source 1.7 -target 1.7 "
-            + " -classpath " + string.Join(";", jarLibFiles)
-            + " -sourcepath " + JAVA_SRC_PATH
-            + " -bootclasspath "
-            + platformJar + " " + string.Join(" ", javaSrcFiles);
-        if (!Directory.Exists(JAVA_OBJ_PATH)) { Directory.CreateDirectory(JAVA_OBJ_PATH); }
-        allCmd.AppendFormat("call \"{0}\" {1}\n\n", javacPath, compileParam);
-
-        //dx
-        string dxPath = buildToolPath + "/dx.bat";
-        string pkgRawPath = BUILD_SCRIPTS_PATH + "/pkg_raw";
-        string dexPath = pkgRawPath + "/classes.dex";
-        string deParam = " --dex --output=" + dexPath + " " + JAVA_OBJ_PATH + " " + string.Join(" ", jarLibFiles);
-        if (!Directory.Exists(pkgRawPath)) { Directory.CreateDirectory(pkgRawPath); }
-        allCmd.AppendFormat("call \"{0}\" {1}\n\n@echo on\n\n", dxPath, deParam);
-
-        //prepare lib
-        string outputLibPath = pkgRawPath + "/lib";
-        if (Directory.Exists(outputLibPath)) { FileUtil.DeleteFileOrDirectory(outputLibPath); }
-        Directory.CreateDirectory(outputLibPath);
-        FileUtil.ReplaceDirectory(SO_LIB_PATH + "/armeabi-v7a", outputLibPath + "/armeabi-v7a");
-        FileUtil.ReplaceDirectory(SO_LIB_PATH + "/x86", outputLibPath + "/x86");
-#if UNITY_2018 || UNITY_2019
-        FileUtil.ReplaceDirectory(SO_LIB_PATH + "/arm64-v8a", outputLibPath + "/arm64-v8a");
-        FileUtil.DeleteFileOrDirectory(outputLibPath + "/arm64-v8a/Data");
-#endif
-        FileUtil.DeleteFileOrDirectory(outputLibPath + "/armeabi-v7a/Data");
-        FileUtil.DeleteFileOrDirectory(outputLibPath + "/x86/Data");
-        var debug_files = Directory.GetFiles(outputLibPath, "*.*", SearchOption.AllDirectories).Where(s => s.EndsWith(".debug") || s.EndsWith(".map") || s.EndsWith(".sym"));
-        foreach (string file in debug_files) { File.Delete(file); }
-
-        //build apk
-        string binPath = BUILD_SCRIPTS_PATH + "/bin";
-        if (!Directory.Exists(binPath)) { Directory.CreateDirectory(binPath); }
-        string unaligned_apk_path = binPath + "/" + Application.identifier + "." + ".unaligned.apk";
-        string assetsPath = EXPORTED_ASSETS_PATH;
-        string buildApkParam = " package -f -m -F " + unaligned_apk_path + " -M " + MANIFEST_XML_PATH + " -A " + assetsPath + " -S " + RES_PATH + " -I " + platformJar
-            + " " + pkgRawPath;
-        allCmd.AppendFormat("call \"{0}\" {1}\n\n", aaptPath, buildApkParam);
-
-        //align
-        string zipalign = buildToolPath + "/zipalign.exe";
-        string alignedApkName = Application.identifier + ".apk";
-        string alignedApkPath = binPath + "/" + alignedApkName;
-        string zipalignParam = " -f 4 " + unaligned_apk_path + " " + alignedApkPath;
-        allCmd.AppendFormat("call \"{0}\" {1}\n\n", zipalign, zipalignParam);
+        //must use the jdk in Unity
+        string gradlePath = jdkPath + "/../Tools/Gradle";
+        string[] gradleMainJarFiles = Directory.GetFiles(gradlePath + "/lib", "gradle-launcher*.jar", SearchOption.TopDirectoryOnly);
+        if (gradleMainJarFiles.Length == 0)
+        {
+            Debug.LogError("gradle-launcher jar file not found in " + gradlePath + "/lib");
+            return false;
+        }
+        string gradleMainJarFile = gradleMainJarFiles[0];
 
         //sign
         string keystoreDir = PROJECT_DIR + "/AndroidKeystore";
@@ -348,21 +285,28 @@ import io.github.noodle1983.Boostrap;");
                 return false;
             }
         }
-        string apksignerPath = buildToolPath + "/apksigner.bat";
-        string signParam = " sign --ks " + keystoreFile + " --ks-pass pass:testtest --key-pass pass:testtest " + alignedApkPath;
-        allCmd.AppendFormat("call \"{0}\" {1}\n\n", apksignerPath, signParam);
 
-        //del tmp apk
-        allCmd.AppendFormat("del /f /a /Q {0}\n\n", unaligned_apk_path.Replace("/", "\\"));
-        allCmd.AppendFormat("explorer.exe {0} \n\n", binPath.Replace("//", "/").Replace("/", "\\"));
+        StringBuilder allCmd = new StringBuilder();
+        allCmd.AppendFormat("cd \"{0}\"\n\n", ANDROID_EXPORT_PATH);
+        allCmd.AppendFormat("call \"{0}\" "
+            + " -classpath \"{1}\" org.gradle.launcher.GradleMain \"-Dorg.gradle.jvmargs=-Xmx4096m\" \"assembleRelease\""
+            + " -Pandroid.injected.signing.store.file=\"{2}\""
+            + " -Pandroid.injected.signing.store.password=testtest "
+            + " -Pandroid.injected.signing.key.alias=test "
+            + " -Pandroid.injected.signing.key.password=testtest"
+            + " \n\n",
+            jdkPath + "/bin/java.exe",
+            gradleMainJarFile,
+            keystoreFile);
+
+        allCmd.AppendFormat("copy /Y \"{0}\\launcher\\build\\outputs\\apk\\release\\launcher-release.apk\"  \"{0}\\{1}.apk\" \n\n",
+            ANDROID_EXPORT_PATH.Replace("//", "/").Replace("/", "\\"),
+            Application.identifier);
+
+        allCmd.AppendFormat("explorer.exe {0} \n\n", ANDROID_EXPORT_PATH.Replace("//", "/").Replace("/", "\\"));
         allCmd.AppendFormat("@echo on\n\n"); //explorer as the last line wont return success, so...
-        File.WriteAllText(BUILD_SCRIPTS_PATH + "/build_apk.bat", allCmd.ToString());
-
-        //bugs for android-23
-        //https://issuetracker.unity3d.com/issues/android-build-fails-with-failed-to-repackage-resources-error-when-api-level-23-or-lower-is-used
-        string manifestXmlPath = MANIFEST_XML_PATH;
-        string content = File.ReadAllText(manifestXmlPath);
-        File.WriteAllText(manifestXmlPath, content.Replace(@"|density", ""));
+        File.WriteAllText(ANDROID_EXPORT_PATH + "/build_apk.bat", allCmd.ToString());
+        
         return true;
     }
 
@@ -370,9 +314,9 @@ import io.github.noodle1983.Boostrap;");
     [MenuItem("AndroidBuilder/Step 5: Build Apk File", false, 105)]
     public static bool BuildApk()
     {
-        string buildApkPath = BUILD_SCRIPTS_PATH + "/build_apk.bat";
+        string buildApkPath = ANDROID_EXPORT_PATH + "/build_apk.bat";
         string alignedApkName = Application.identifier + ".apk";
-        string alignedApkPath = BUILD_SCRIPTS_PATH + "/bin/" + alignedApkName;
+        string alignedApkPath = ANDROID_EXPORT_PATH + "/" + alignedApkName;
 
         if (!Exec(buildApkPath, ""))
         {
