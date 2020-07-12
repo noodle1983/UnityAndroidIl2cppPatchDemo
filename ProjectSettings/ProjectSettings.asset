@@ -174,7 +174,7 @@ PlayerSettings:
   applicationIdentifier:
     Android: cn.noodle1983.unitypatchdemo
   buildNumber: {}
-  AndroidBundleVersionCode: 1
+  AndroidBundleVersionCode: 2
   AndroidMinSdkVersion: 19
   AndroidTargetSdkVersion: 0
   AndroidPreferredInstallLocation: 1
