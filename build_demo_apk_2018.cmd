@@ -46,11 +46,11 @@ rem ============================================================================
 cd %ProjectPath%
 git checkout master
 %BuildCmd% -executeMethod AndroidBuilder.BuildWithoutPatch -logFile build_version0.log
-if not exist "%ProjectPath%\AndroidGradleProject\Test\src\main\bin\com.test.test.apk" (
-    echo "Build Failed! Please Rerun %ProjectPath%\AndroidGradleProject\Test\src\main\build_apk.bat to check the error."
+if not exist "%ProjectPath%\AndroidGradleProject_v1.0\Test\src\main\bin\com.test.test.apk" (
+    echo "Build Failed! Please Rerun %ProjectPath%\AndroidGradleProject_v1.0\Test\src\main\build_apk.bat to check the error."
 	exit -1
 )
 
-copy /Y %ProjectPath%\AndroidGradleProject\Test\src\main\bin\com.test.test.apk  %ScriptPath%\Il2cppDemo_com.test.test.apk
+copy /Y %ProjectPath%\AndroidGradleProject_v1.0\Test\src\main\bin\com.test.test.apk  %ScriptPath%\Il2cppDemo_com.test.test.apk
 echo "Done!"
 exit 0
