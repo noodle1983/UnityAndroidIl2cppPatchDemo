@@ -92,9 +92,10 @@ public class VersionSettor : MonoBehaviour {
         if (Directory.Exists(cacheDir)) {
             DeleteDirectory(cacheDir);
         }
-        else
+        
+        if (Directory.Exists(cacheDir))
         {
-            messageBox.Show("pre Unity cached file not found. path:" + cacheDir, "ok", () => { messageBox.Close(); });
+            messageBox.Show("failed to delete pre Unity cached file. path:" + cacheDir, "ok", () => { messageBox.Close(); });
             yield break;
         }
 
@@ -115,25 +116,36 @@ public class VersionSettor : MonoBehaviour {
 
     public static void DeleteDirectory(string target_dir)
     {
-        try
-        {
-            string[] files = Directory.GetFiles(target_dir);
-            string[] dirs = Directory.GetDirectories(target_dir);
+        string[] files = Directory.GetFiles(target_dir);
+        string[] dirs = Directory.GetDirectories(target_dir);
 
-            foreach (string file in files)
+        foreach (string file in files)
+        {
+            try
             {
+                Debug.Log("deleting file:" + file);
                 File.SetAttributes(file, FileAttributes.Normal);
                 File.Delete(file);
+                Debug.Log("deleted file:" + file);
             }
-
-            foreach (string dir in dirs)
+            catch (System.Exception e)
             {
-                DeleteDirectory(dir);
+                Debug.LogException(e);
             }
-
-            Directory.Delete(target_dir, false);
         }
-        catch(System.Exception e)
+
+        foreach (string dir in dirs)
+        {
+            DeleteDirectory(dir);
+        }
+
+        try
+        {
+            Debug.Log("deleting dir:" + target_dir);
+            Directory.Delete(target_dir, false);
+            Debug.Log("deleted dir:" + target_dir);
+        }
+        catch (System.Exception e)
         {
             Debug.LogException(e);
         }
