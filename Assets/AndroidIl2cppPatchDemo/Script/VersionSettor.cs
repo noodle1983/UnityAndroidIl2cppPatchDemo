@@ -27,11 +27,21 @@ public class VersionSettor : MonoBehaviour {
             if (!string.IsNullOrEmpty(error))
             {
                 messageBox.Show("use failed. empty path error:" + error, "ok", ()=> { messageBox.Close(); });
+                return;
             }
-            else
+
+            string cacheDir = Application.persistentDataPath + "/il2cpp";
+            if (Directory.Exists(cacheDir))
             {
-                StartCoroutine(Restart());
+                DeleteDirectory(cacheDir);
             }
+
+            if (Directory.Exists(cacheDir))
+            {
+                messageBox.Show("failed to delete pre Unity cached file. path:" + cacheDir, "ok", () => { messageBox.Close(); });
+                return;
+            }
+            StartCoroutine(Restart());
             return;
         }
         StartCoroutine(PreparePatchAndRestart());
