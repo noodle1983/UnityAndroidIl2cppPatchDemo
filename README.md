@@ -110,18 +110,15 @@ Unity在以il2cpp方式导出Android工程（或者Apk文件）的时候，代�
 ### 依赖
 
 *	Unity (我用Unity2017/Unity2018/Unity2019)
-*	JDK.(我用JDK1.8)
-*	Android SDK.(我用Android SDK platform 23 和 build tools 26.0.2（低于26.0.2，Unity2018不支持），最好是这两个版本，不然得重新下载)
-*	Android NDK r16b. 
+*	Unity2019.4 自带的JDK，SDK，NDK
 *	Git 
 	
 ### Build指引
 
 * 1. 在Unity中（**Edit**->**Preference**->**External tools**）设置好 JDK/SDK/NDK 路径，打包代码里会从Unity中读取。
-* 2. 如果你的Android SDK的build tools版本不是26.0.2，需要修改代码 AndroidBuilder.cs，第14行.
-* 3. 如果你使用的Android platform不是android-23，修改代码 AndroidBuilder.cs，第15行.
-* 4. 出母包，执行菜单 **AndroidBuilder**->**Run Step 1, 2, 4, 5 for base version**, 成功后会弹出文件管理器显示apk所在的目录.
-* 5. 一般来说你不需要打Patch文件，如果要打，用git checkout version1或version2，执行菜单 **AndroidBuilder**->**Run Step 1-4 for Patch Version**。PrebuildPatches目录下的相应文件会被更新。
+* 2. 确保gradle能正常工作（Unity内能正常导出apk）
+* 3. 出母包，执行菜单 **AndroidBuilder**->**Run Step 1, 2, 4, 5 for base version**, 成功后会弹出文件管理器显示apk所在的目录.
+* 4. 一般来说你不需要打Patch文件，如果要打，用git checkout version1或version2，执行菜单 **AndroidBuilder**->**Run Step 1-4 for Patch Version**。PrebuildPatches目录下的相应文件会被更新。
 
 # 5. 剩下的工作和建议
 打包部分
@@ -164,8 +161,9 @@ MIT license.
 # 8.调试和遗留问题
 * 1. 集成中如果有问题，先看看Demo的[release版本](https://github.com/noodle1983/UnityAndroidIl2cppPatchDemo/releases)有没有问题。如果Demo有问题，直接找我吧，QQ或邮件都行。
 * 2. 如果感兴趣，可以在[log.h](https://github.com/noodle1983/UnityAndroidIl2cppPatchDemo-libboostrap/blob/master/log.h)里，把日志全开，会有一些很有意思的日志，对理解原理和调试都很有用。
-* 3. Q群：593413410
-* 4. 遗留问题见[Github Issues](https://github.com/noodle1983/UnityAndroidIl2cppPatchDemo/issues)
+* 3. Android obb的支持，欢迎pull request，提供支持
+* 4. Q群：593413410
+* 5. 遗留问题见[Github Issues](https://github.com/noodle1983/UnityAndroidIl2cppPatchDemo/issues)
 
 # 9.支持
 
