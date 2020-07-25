@@ -9,11 +9,6 @@ using UnityEngine;
 
 public class AndroidBuilder : MonoBehaviour {
 
-    //-----------------------------------------  config ---------------------------------
-    //set SDK/NDK/JDK via Unity Menu Path: Edit -> Preferences... -> External Tools -> Android
-    public static readonly string ANDROID_BUILD_TOOLS_VERSION = "26.0.2";
-    public static readonly string ANDROID_PLATFORM = "android-23";
-
     //-----------------------------------------------------------------------------------
     public static readonly string PROJECT_DIR = Application.dataPath.Substring(0, Application.dataPath.Length - 6);
     public static readonly string ANDROID_EXPORT_PATH = PROJECT_DIR + "/AndroidGradleProject_v1.0";
@@ -98,26 +93,10 @@ public class AndroidBuilder : MonoBehaviour {
             }
         }
 
-        string buildToolPath = sdkPath + "/build-tools/" + ANDROID_BUILD_TOOLS_VERSION + "/";
-        if (!Directory.Exists(buildToolPath))
-        {
-            Debug.LogError("Android Build Tools not found. Try to reconfig version on the top of AndroidBuilder.cs. In Unity2018, it can't be work if less than 26.0.2. current:" + buildToolPath);
-            return false;
-        }
-
-        string platformJar = sdkPath + "/platforms/" + ANDROID_PLATFORM + "/android.jar";
-        if (!File.Exists(platformJar))
-        {
-            Debug.LogError("Android Platform not found. Try to reconfig version on the top of AndroidBuilder.cs. current:" + platformJar);
-            return false;
-        }
-
         Debug.Log("Build Env is ready!");
         Debug.Log("Build Options:");
         Debug.Log("SDK PATH=" + sdkPath);
         Debug.Log("JDK PATH=" + jdkPath);
-        Debug.Log("BUILD TOOLS PATH=" + buildToolPath);
-        Debug.Log("ANDROID PLATFORM=" + platformJar);
         return true;
     }
 
