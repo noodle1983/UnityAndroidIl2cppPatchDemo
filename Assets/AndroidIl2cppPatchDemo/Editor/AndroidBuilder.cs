@@ -98,9 +98,9 @@ public class AndroidBuilder : MonoBehaviour {
         if (string.IsNullOrEmpty(ndkPath)) { ndkPath = DEFAULT_NDK_PATH; }
         if (string.IsNullOrEmpty(ndkPath) || !Directory.Exists(ndkPath))
         {
-            Debug.LogError("ndk path is empty! please config via menu path:Edit/Preference->External tools.");
-            return false;
-        }
+                Debug.LogError("ndk path is empty! please config via menu path:Edit/Preference->External tools.");
+                return false;
+            }
 
         Debug.Log("Build Env is ready!");
         Debug.Log("Build Options:");
