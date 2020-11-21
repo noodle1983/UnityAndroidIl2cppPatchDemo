@@ -154,7 +154,7 @@ public class AndroidBuilder : MonoBehaviour {
 
         return true;
     }
-
+        
     [MenuItem("AndroidBuilder/Step 2: Build Il2cpp So", false, 102)]
     public static bool BuildIl2cppSoLib()
     {
@@ -269,6 +269,7 @@ import io.github.noodle1983.Boostrap;");
             ZipHelper.ZipFile(projectFullPath, pathInZipFile, patchTopPath + zipFileName, 9);
         }
 
+        string exportPatchesDir = PROJECT_DIR + "/AllAndroidPatchFiles/assets_bin_Data/";
         string[] allAssetsBinDataFiles = Directory.GetFiles(assetBinDataPath, "*", SearchOption.AllDirectories);
         StringBuilder allZipCmds = new StringBuilder();
         allZipCmds.AppendFormat("if not exist \"{0}\" (MD \"{0}\") \n", PROJECT_DIR + "/AllAndroidPatchFiles/");
