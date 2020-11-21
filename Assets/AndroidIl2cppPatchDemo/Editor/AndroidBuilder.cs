@@ -28,6 +28,7 @@ public class AndroidBuilder : MonoBehaviour {
     public static string MANIFEST_XML_PATH = ANDROID_PROJECT_PATH + "/unityLibrary/src/main/AndroidManifest.xml";
     public static string JAVA_OBJ_PATH = ANDROID_PROJECT_PATH + "/unityLibrary/src/main/objs/";
     public static string BUILD_SCRIPTS_PATH = ANDROID_PROJECT_PATH + "/unityLibrary/src/main/";
+    public static string TO_BE_REMOVED_FILE_NAME = "removed_files.txt";
     public static string ZIP_PATH = PROJECT_DIR + "/Assets/AndroidIl2cppPatchDemo/Editor/Exe/zip.exe";
 
     static bool Exec(string filename, string args)
@@ -175,13 +176,13 @@ import io.github.noodle1983.Boostrap;");
         mUnityPlayer = new UnityPlayer(this, this);");
         File.WriteAllText(javaEntranceFile, allJavaText);
 
-        // generate removal test file
-        string assetBinDataPath = EXPORTED_ASSETS_PATH + "/bin/Data/";
-        string uselessFile1 = assetBinDataPath + "to_be_removed1.txt";
-        File.WriteAllText(uselessFile1, "useless1");
+        // remove these files in this version
+        //string assetBinDataPath = EXPORTED_ASSETS_PATH + "/bin/Data/";
+        //string uselessFile1 = assetBinDataPath + "to_be_removed1.txt";
+        //File.WriteAllText(uselessFile1, "useless1");
 
-        string uselessFile2 = assetBinDataPath + "to_be_removed2.txt";
-        File.WriteAllText(uselessFile2, "useless2");
+        //string uselessFile2 = assetBinDataPath + "to_be_removed2.txt";
+        //File.WriteAllText(uselessFile2, "useless2");
 
         return true;
     }
@@ -215,10 +216,11 @@ import io.github.noodle1983.Boostrap;");
             ZipHelper.ZipFile(projectFullPath, pathInZipFile, patchTopPath + zipFileName, 9);
         }
 
+        string exportPatchesDir = PROJECT_DIR + "/AllAndroidPatchFiles/assets_bin_Data/";
         string[] allAssetsBinDataFiles = Directory.GetFiles(assetBinDataPath, "*", SearchOption.AllDirectories);
         StringBuilder allZipCmds = new StringBuilder();
         allZipCmds.AppendFormat("if not exist \"{0}\" (MD \"{0}\") \n", PROJECT_DIR + "/AllAndroidPatchFiles/");
-        allZipCmds.AppendFormat("if not exist \"{0}\" (MD \"{0}\") \n", PROJECT_DIR + "/AllAndroidPatchFiles/assets_bin_Data/");
+        allZipCmds.AppendFormat("if not exist \"{0}\" (MD \"{0}\") \n", exportPatchesDir);
         foreach (string apk_file in allAssetsBinDataFiles)
         {
             string relativePathHeader = "assets/bin/Data/";
@@ -227,8 +229,12 @@ import io.github.noodle1983.Boostrap;");
             string relativePath = apk_file.Substring(relativePathStart + relativePathHeader.Length).Replace('\\', '/'); //file: xxx/xxx
             string zipFileName = relativePath.Replace("/", "__").Replace("\\", "__") + ".bin";                                     //file: xxx__xxx.bin
 
-            allZipCmds.AppendFormat("cd {0} && {1} -8 \"{2}\" \"{3}\"\n", BUILD_SCRIPTS_PATH, ZIP_PATH, PROJECT_DIR + "/AllAndroidPatchFiles/assets_bin_Data/" + zipFileName, filenameInZip);
+            allZipCmds.AppendFormat("cd {0} && {1} -8 \"{2}\" \"{3}\"\n", BUILD_SCRIPTS_PATH, ZIP_PATH, exportPatchesDir + zipFileName, filenameInZip);
         }
+
+        //remove file example
+        allZipCmds.AppendFormat("cd {0} && echo asserts/bin/Data/to_be_removed1.txt> {1}\n", exportPatchesDir, TO_BE_REMOVED_FILE_NAME);
+        allZipCmds.AppendFormat("cd {0} && echo asserts/bin/Data/to_be_removed2.txt>> {1}\n", exportPatchesDir, TO_BE_REMOVED_FILE_NAME);
 
         string zippedPatchFile = PROJECT_DIR + "/Assets/AndroidIl2cppPatchDemo/PrebuiltPatches/AllAndroidPatchFiles_Version1.zip";
         if (File.Exists(zippedPatchFile)) { FileUtil.DeleteFileOrDirectory(zippedPatchFile);  }
