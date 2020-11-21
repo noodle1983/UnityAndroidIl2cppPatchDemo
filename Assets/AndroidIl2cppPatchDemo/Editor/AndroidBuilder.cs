@@ -291,8 +291,8 @@ import io.github.noodle1983.Boostrap;");
         }
 
         //remove file example
-        allZipCmds.AppendFormat("cd {0} && echo asserts/bin/Data/to_be_removed1.txt> {1}\n", patchTopPath, TO_BE_REMOVED_FILE_NAME);
-        allZipCmds.AppendFormat("cd {0} && echo asserts/bin/Data/to_be_removed2.txt>> {1}\n", patchTopPath, TO_BE_REMOVED_FILE_NAME);
+        allZipCmds.AppendFormat("cd {0} && echo assets/bin/Data/to_be_removed1.txt> {1}\n", patchTopPath, TO_BE_REMOVED_FILE_NAME);
+        allZipCmds.AppendFormat("cd {0} && echo assets/bin/Data/to_be_removed2.txt>> {1}\n", patchTopPath, TO_BE_REMOVED_FILE_NAME);
 
         string zippedPatchFile = PROJECT_DIR + "/Assets/AndroidIl2cppPatchDemo/PrebuiltPatches/AllAndroidPatchFiles_Version1.zip";
         if (File.Exists(zippedPatchFile)) { FileUtil.DeleteFileOrDirectory(zippedPatchFile);  }
