@@ -192,6 +192,15 @@ import io.github.noodle1983.Boostrap;");
             @"Boostrap.InitNativeLibBeforeUnityPlay(getApplication().getApplicationContext().getFilesDir().getPath());
         mUnityPlayer = new UnityPlayer(this);");
         File.WriteAllText(javaEntranceFile, allJavaText);
+
+        // generate removal test file
+        string assetBinDataPath = EXPORTED_ASSETS_PATH + "/bin/Data/";
+        string uselessFile1 = assetBinDataPath + "to_be_removed1.txt";
+        File.WriteAllText(uselessFile1, "useless1");
+
+        string uselessFile2 = assetBinDataPath + "to_be_removed2.txt";
+        File.WriteAllText(uselessFile2, "useless2");
+
         return true;
     }
 
