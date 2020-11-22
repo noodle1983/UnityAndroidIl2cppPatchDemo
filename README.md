@@ -153,6 +153,8 @@ MIT license.
 
 * 6. qq：Enough.(1098839800) 实践文档：[通过IL2CPP热更代码](https://www.jianshu.com/p/7b205ebcb54a)
 
+* 7. github: [marklalon](https://github.com/marklalon)及其项目组 性能优化和严谨的性能测试 [repo link](https://github.com/marklalon/UnityAndroidIl2cppPatchDemo-libboostrap)
+
 # 8.调试和遗留问题
 * 1. 集成中如果有问题，先看看Demo的[release版本](https://github.com/noodle1983/UnityAndroidIl2cppPatchDemo/releases)有没有问题。如果Demo有问题，直接找我吧，QQ或邮件都行。
 * 2. 如果感兴趣，可以在[log.h](https://github.com/noodle1983/UnityAndroidIl2cppPatchDemo-libboostrap/blob/master/log.h)里，把日志全开，会有一些很有意思的日志，对理解原理和调试都很有用。
