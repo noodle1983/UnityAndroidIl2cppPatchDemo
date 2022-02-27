@@ -13,6 +13,7 @@ public class AndroidBuilder : MonoBehaviour {
     public static readonly string PROJECT_DIR = Application.dataPath.Substring(0, Application.dataPath.Length - 6);
     public static readonly string ANDROID_EXPORT_PATH = PROJECT_DIR + "/AndroidGradleProject_v1.0";
     public static string ANDROID_PROJECT_PATH { get { return ANDROID_EXPORT_PATH; } }
+    public static string ANDROID_UNITYLIBRARY_PATH =  ANDROID_PROJECT_PATH + "/unityLibrary/";
     public static string ANDROID_MANIFEST_PATH = ANDROID_PROJECT_PATH + "/unityLibrary/src/main/";
     public static string JAVA_SRC_PATH = ANDROID_PROJECT_PATH + "/unityLibrary/src/main/java/";
     public static string JAR_LIB_PATH = ANDROID_PROJECT_PATH + "/unityLibrary/libs/";
@@ -27,6 +28,14 @@ public class AndroidBuilder : MonoBehaviour {
     public static string JAVA_OBJ_PATH = ANDROID_PROJECT_PATH + "/unityLibrary/src/main/objs/";
     public static string BUILD_SCRIPTS_PATH = ANDROID_PROJECT_PATH + "/unityLibrary/src/main/";
     public static string ZIP_PATH = PROJECT_DIR + "/Assets/AndroidIl2cppPatchDemo/Editor/Exe/zip.exe";
+
+    public static string UNITY_EXE_PATH = System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName;
+    public static string UNITY_EXE_DIR = Path.GetDirectoryName(UNITY_EXE_PATH);
+    public static string DEFAULT_SDK_PATH = UNITY_EXE_DIR + "/Data/PlaybackEngines/AndroidPlayer/SDK/";
+    public static string DEFAULT_JDK_PATH = UNITY_EXE_DIR + "/Data/PlaybackEngines/AndroidPlayer/OpenJDK/";
+    public static string DEFAULT_NDK_PATH = UNITY_EXE_DIR + "/Data/PlaybackEngines/AndroidPlayer/NDK/";
+    public static string GRADLE_PROXY_STRING = " \"-Dhttp.proxyHost=127.0.0.1\" \"-Dhttp.proxyPort=1080\" \"-Dhttps.proxyHost=127.0.0.1\" \"-Dhttps.proxyPort=1080\" ";
+    //public static string GRADLE_PROXY_STRING = "";
 
     static bool Exec(string filename, string args)
     {
@@ -69,34 +78,35 @@ public class AndroidBuilder : MonoBehaviour {
     public static bool ValidateConfig()
     {
         string sdkPath = EditorPrefs.GetString("AndroidSdkRoot", "");
-        if (string.IsNullOrEmpty(sdkPath))
+        if (string.IsNullOrEmpty(sdkPath)) { sdkPath = DEFAULT_SDK_PATH; }
+        if (string.IsNullOrEmpty(sdkPath) || !Directory.Exists(sdkPath))
         {
             Debug.LogError("sdk path is empty! please config via menu path:Edit/Preference->External tools.");
             return false;
         }
 
         string jdkPath = EditorPrefs.GetString("JdkPath", "");
-        if (string.IsNullOrEmpty(jdkPath))
+        if (string.IsNullOrEmpty(jdkPath)) { jdkPath = DEFAULT_JDK_PATH; }
+        if (string.IsNullOrEmpty(jdkPath) || !Directory.Exists(jdkPath))
         {
             Debug.LogError("jdk path is empty! please config via menu path:Edit/Preference->External tools.");
             return false;
         }
 
         string ndkPath = EditorPrefs.GetString("AndroidNdkRootR16b", "");
-        if (string.IsNullOrEmpty(ndkPath))
+        if (string.IsNullOrEmpty(ndkPath)) { ndkPath = EditorPrefs.GetString("AndroidNdkRoot", ""); }
+        if (string.IsNullOrEmpty(ndkPath)) { ndkPath = DEFAULT_NDK_PATH; }
+        if (string.IsNullOrEmpty(ndkPath) || !Directory.Exists(ndkPath))
         {
-            ndkPath = EditorPrefs.GetString("AndroidNdkRoot", "");
-            if (string.IsNullOrEmpty(ndkPath))
-            {
-                Debug.LogError("ndk path is empty! please config via menu path:Edit/Preference->External tools.");
-                return false;
-            }
+            Debug.LogError("ndk path is empty! please config via menu path:Edit/Preference->External tools.");
+            return false;
         }
 
         Debug.Log("Build Env is ready!");
         Debug.Log("Build Options:");
         Debug.Log("SDK PATH=" + sdkPath);
         Debug.Log("JDK PATH=" + jdkPath);
+        Debug.Log("NDK PATH=" + ndkPath);
         return true;
     }
 
@@ -117,7 +127,7 @@ public class AndroidBuilder : MonoBehaviour {
         //export project
         string error_msg = string.Empty;
         string[] levels = new string[] { "Assets/AndroidIl2cppPatchDemo/Scene/0.unity" };
-        BuildOptions options = BuildOptions.AcceptExternalModificationsToPlayer;       
+        BuildOptions options = BuildOptions.None;
         if (Directory.Exists(ANDROID_EXPORT_PATH)) { FileUtil.DeleteFileOrDirectory(ANDROID_EXPORT_PATH);}
         Directory.CreateDirectory(ANDROID_EXPORT_PATH);
         try
@@ -142,7 +152,55 @@ public class AndroidBuilder : MonoBehaviour {
         return true;
     }
 
-    [MenuItem("AndroidBuilder/Step 2: Patch Gradle Project", false, 102)]
+    [MenuItem("AndroidBuilder/Step 2: Build Il2cpp So", false, 102)]
+    public static bool BuildIl2cppSoLib()
+    {
+        string jdkPath = EditorPrefs.GetString("JdkPath", "");
+        if (string.IsNullOrEmpty(jdkPath)) { jdkPath = DEFAULT_JDK_PATH; }
+        if (string.IsNullOrEmpty(jdkPath) || !Directory.Exists(jdkPath))
+        {
+            Debug.LogError("jdk path is empty! please config via menu path:Edit/Preference->External tools.");
+            return false;
+        }
+
+        //must use the jdk in Unity
+        string gradlePath = jdkPath + "/../Tools/Gradle";
+        string[] gradleMainJarFiles = Directory.GetFiles(gradlePath + "/lib", "gradle-launcher*.jar", SearchOption.TopDirectoryOnly);
+        if (gradleMainJarFiles.Length == 0)
+        {
+            Debug.LogError("gradle-launcher jar file not found in " + gradlePath + "/lib");
+            return false;
+        }
+        string gradleMainJarFile = gradleMainJarFiles[0];
+
+        StringBuilder allCmd = new StringBuilder();
+        allCmd.AppendFormat("cd \"{0}\"\n\n", ANDROID_UNITYLIBRARY_PATH);
+        allCmd.AppendFormat("call \"{0}\" "
+            + " -classpath \"{1}\" org.gradle.launcher.GradleMain \"-Dorg.gradle.jvmargs=-Xmx4096m\" \"BuildIl2CppTask\""
+            + GRADLE_PROXY_STRING
+            + " \n\n",
+            jdkPath + "/bin/java.exe",
+            gradleMainJarFile);
+
+        string buildFile = ANDROID_UNITYLIBRARY_PATH + "/build_il2cpp.bat";
+        File.WriteAllText(ANDROID_UNITYLIBRARY_PATH + "/build_il2cpp.bat", allCmd.ToString());
+
+        if (!Exec(buildFile, ""))
+        {
+            Debug.LogError("exec failed:" + buildFile);
+            return false;
+        }
+
+        string testSoPath = SO_LIB_PATH + "/arm64-v8a/libil2cpp.so";
+        if (!File.Exists(testSoPath))
+        {
+            Debug.LogError("libil2cpp.so not found:" + testSoPath + ", exec failed:" + buildFile);
+            return false;
+        }
+        return true;
+    }
+
+    [MenuItem("AndroidBuilder/Step 3: Patch Gradle Project", false, 102)]
     public static bool PatchAndroidProject()
     {
         //1. patch java file
@@ -180,7 +238,7 @@ import io.github.noodle1983.Boostrap;");
     }
 
 
-    [MenuItem("AndroidBuilder/Step 3: Generate Bin Patches", false, 103)]
+    [MenuItem("AndroidBuilder/Step 4: Generate Bin Patches", false, 103)]
     public static bool GenerateBinPatches()
     {
         string assetBinDataPath = EXPORTED_ASSETS_PATH + "/bin/Data/";
@@ -239,11 +297,12 @@ import io.github.noodle1983.Boostrap;");
         return true;
     }
 
-    [MenuItem("AndroidBuilder/Step 4: Generate Build Scripts", false, 104)]
+    [MenuItem("AndroidBuilder/Step 5: Generate Build Scripts", false, 104)]
     public static bool GenerateBuildScripts()
     {
-        string jdkPath = EditorPrefs.GetString("JdkPath", ""); ;
-        if (string.IsNullOrEmpty(jdkPath))
+        string jdkPath = EditorPrefs.GetString("JdkPath", "");
+        if (string.IsNullOrEmpty(jdkPath)) { jdkPath = DEFAULT_JDK_PATH; }
+        if (string.IsNullOrEmpty(jdkPath) || !Directory.Exists(jdkPath))
         {
             Debug.LogError("jdk path is empty! please config via menu path:Edit/Preference->External tools.");
             return false;
@@ -278,6 +337,7 @@ import io.github.noodle1983.Boostrap;");
         allCmd.AppendFormat("cd \"{0}\"\n\n", ANDROID_EXPORT_PATH);
         allCmd.AppendFormat("call \"{0}\" "
             + " -classpath \"{1}\" org.gradle.launcher.GradleMain \"-Dorg.gradle.jvmargs=-Xmx4096m\" \"assembleRelease\""
+            + GRADLE_PROXY_STRING
             + " -Pandroid.injected.signing.store.file=\"{2}\""
             + " -Pandroid.injected.signing.store.password=testtest "
             + " -Pandroid.injected.signing.key.alias=test "
@@ -299,7 +359,7 @@ import io.github.noodle1983.Boostrap;");
     }
 
 
-    [MenuItem("AndroidBuilder/Step 5: Build Apk File", false, 105)]
+    [MenuItem("AndroidBuilder/Step 6: Build Apk File", false, 105)]
     public static bool BuildApk()
     {
         string buildApkPath = ANDROID_EXPORT_PATH + "/build_apk.bat";
@@ -320,38 +380,39 @@ import io.github.noodle1983.Boostrap;");
         return true;
     }
 
-    [MenuItem("AndroidBuilder/Run Step 1-5", false, 1)]
+    [MenuItem("AndroidBuilder/Run Step 1-6", false, 1)]
     public static void BuildAll()
     {
-        //Step 1
         if (!ExportGradleProject())
         {
             Debug.LogError("failed to ExportGradleProject");
             return;
         }
 
-        //Step 2
+        if (!BuildIl2cppSoLib())
+        {
+            Debug.LogError("failed to BuildIl2cppSoLig");
+            return;
+        }
+
         if (!PatchAndroidProject())
         {
             Debug.LogError("failed to PatchAndroidProject");
             return;
         }
 
-        //Step 3
         if (!GenerateBinPatches())
         {
             Debug.LogError("failed to GenerateBinPatches");
             return;
         }
 
-        //Step 4
         if (!GenerateBuildScripts())
         {
             Debug.LogError("failed to GenerateBuildScripts");
             return;
         }
 
-        //Step 5
         if (!BuildApk())
         {
             Debug.LogError("failed to BuildApk");
@@ -360,31 +421,33 @@ import io.github.noodle1983.Boostrap;");
         Debug.Log("Done!");
     }
 
-    [MenuItem("AndroidBuilder/Run Step 1, 2, 4, 5 for base version", false, 2)]
+    [MenuItem("AndroidBuilder/Run Step 1, 2, 3, 5, 6 for base version", false, 2)]
     public static void BuildWithoutPatch()
     {
-        //Step 1
         if (!ExportGradleProject())
         {
             Debug.LogError("failed to ExportGradleProject");
             return;
         }
 
-        //Step 2
         if (!PatchAndroidProject())
         {
             Debug.LogError("failed to PatchAndroidProject");
             return;
         }
 
-        //Step 4
+        if (!PatchAndroidProject())
+        {
+            Debug.LogError("failed to PatchAndroidProject");
+            return;
+        }
+
         if (!GenerateBuildScripts())
         {
             Debug.LogError("failed to GenerateBuildScripts");
             return;
         }
 
-        //Step 5
         if (!BuildApk())
         {
             Debug.LogError("failed to BuildApk");
@@ -393,7 +456,7 @@ import io.github.noodle1983.Boostrap;");
         Debug.Log("Done!");
     }
 
-    [MenuItem("AndroidBuilder/Run Step 1-4 for Patch Version", false, 3)]
+    [MenuItem("AndroidBuilder/Run Step 1-5 for Patch Version", false, 3)]
     public static void BuildPatch()
     {
         //Step 1
@@ -403,21 +466,18 @@ import io.github.noodle1983.Boostrap;");
             return;
         }
 
-        //Step 2
         if (!PatchAndroidProject())
         {
             Debug.LogError("failed to PatchAndroidProject");
             return;
         }
 
-        //Step 3
         if (!GenerateBinPatches())
         {
             Debug.LogError("failed to GenerateBinPatches");
             return;
         }
 
-        //Step 4
         if (!GenerateBuildScripts())
         {
             Debug.LogError("failed to GenerateBuildScripts");
