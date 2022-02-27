@@ -430,6 +430,13 @@ import io.github.noodle1983.Boostrap;");
             return;
         }
 
+        if (!BuildIl2cppSoLib())
+        {
+            Debug.LogError("failed to BuildIl2cppSoLig");
+            return;
+        }
+
+
         if (!PatchAndroidProject())
         {
             Debug.LogError("failed to PatchAndroidProject");
@@ -459,12 +466,18 @@ import io.github.noodle1983.Boostrap;");
     [MenuItem("AndroidBuilder/Run Step 1-5 for Patch Version", false, 3)]
     public static void BuildPatch()
     {
-        //Step 1
         if (!ExportGradleProject())
         {
             Debug.LogError("failed to ExportGradleProject");
             return;
         }
+
+        if (!BuildIl2cppSoLib())
+        {
+            Debug.LogError("failed to BuildIl2cppSoLig");
+            return;
+        }
+
 
         if (!PatchAndroidProject())
         {
