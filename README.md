@@ -153,7 +153,13 @@ MIT license.
 
 * 6. qq：Enough.(1098839800) 实践文档：[通过IL2CPP热更代码](https://www.jianshu.com/p/7b205ebcb54a)
 
-* 7. github: [marklalon](https://github.com/marklalon)及其项目组 性能优化和严谨的性能测试 [repo link](https://github.com/marklalon/UnityAndroidIl2cppPatchDemo-libboostrap)
+* 7. qq:粽仔001(1144916875) 发现的Demo中回退base version，脚本常量仍然是patch版本的问题。（il2cpp cache没清）
+
+* 8. qq:みなの総長(53957801) 发现的新版本没有更新文件，仍走了没必要的更新逻辑的问题。
+
+* 9. github: [marklalon](https://github.com/marklalon)及其项目组 性能优化和严谨的性能测试 [repo link](https://github.com/marklalon/UnityAndroidIl2cppPatchDemo-libboostrap)
+
+* 10. github: [ganlvtech](https://github.com/ganlvtech) tests/fixs [spin lock issue](https://github.com/noodle1983/UnityAndroidIl2cppPatchDemo-libboostrap/issues/10).
 
 # 8.调试和遗留问题
 * 1. 集成中如果有问题，先看看Demo的[release版本](https://github.com/noodle1983/UnityAndroidIl2cppPatchDemo/releases)有没有问题。如果Demo有问题，直接找我吧，QQ或邮件都行。
