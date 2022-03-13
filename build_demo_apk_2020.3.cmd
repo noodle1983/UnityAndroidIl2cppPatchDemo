@@ -50,11 +50,11 @@ cd %ProjectPath%
 git reset HEAD  --hard
 git checkout 2020_3_base
 %BuildCmd% -executeMethod AndroidBuilder.BuildWithoutPatch -logFile build_version0.log
-if not exist "%ProjectPath%\AndroidGradleProject_v1.0\Test\src\main\bin\com.test.test.apk" (
+if not exist "%ProjectPath%\AndroidGradleProject_v1.0\cn.noodle1983.unitypatchdemo.apk" (
     echo "Build Failed! Please Rerun %ProjectPath%\AndroidGradleProject_v1.0\Test\src\main\build_apk.bat to check the error."
 	exit -1
 )
 
-copy /Y %ProjectPath%\AndroidGradleProject_v1.0\Test\src\main\bin\com.test.test.apk  %ScriptPath%\Il2cppDemo_com.test.test.apk
+copy /Y %ProjectPath%\AndroidGradleProject_v1.0\cn.noodle1983.unitypatchdemo.apk  %ScriptPath%\Il2cppDemo_com.test.test.apk
 echo "Done!"
 exit 0
