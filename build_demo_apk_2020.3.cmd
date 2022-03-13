@@ -14,6 +14,8 @@ rem ============================================================================
 @echo "start to build 2020_3_version1"
 
 cd %ProjectPath%
+git stash
+git reset HEAD  --hard
 git checkout 2020_3_version1
 del %ProjectPath%\Assets\AndroidIl2cppPatchDemo\PrebuiltPatches\AllAndroidPatchFiles_version1.zip
 %BuildCmd% -executeMethod AndroidBuilder.BuildPatch -logFile build_version1.log
@@ -29,6 +31,7 @@ rem ============================================================================
 @echo "start to build 2020_3_version2"
 
 cd %ProjectPath%
+git reset HEAD  --hard
 git checkout 2020_3_version2
 del %ProjectPath%\Assets\AndroidIl2cppPatchDemo\PrebuiltPatches\AllAndroidPatchFiles_version2.zip
 %BuildCmd% -executeMethod AndroidBuilder.BuildPatch -logFile build_version2.log
@@ -44,6 +47,7 @@ rem ============================================================================
 @echo "start to build base version apk"
 
 cd %ProjectPath%
+git reset HEAD  --hard
 git checkout 2020_3_base
 %BuildCmd% -executeMethod AndroidBuilder.BuildWithoutPatch -logFile build_version0.log
 if not exist "%ProjectPath%\AndroidGradleProject_v1.0\Test\src\main\bin\com.test.test.apk" (
