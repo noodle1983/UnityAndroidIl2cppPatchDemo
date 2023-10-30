@@ -148,8 +148,16 @@ public class AndroidBuilder : MonoBehaviour {
         }
 
         //copy the prebuild patch to the assets directory instead of downloading.
-        FileUtil.CopyFileOrDirectory(PROJECT_DIR + "/Assets/AndroidIl2cppPatchDemo/PrebuiltPatches/AllAndroidPatchFiles_Version1.zip", EXPORTED_ASSETS_PATH + "/AllAndroidPatchFiles_Version1.zip");
-        FileUtil.CopyFileOrDirectory(PROJECT_DIR + "/Assets/AndroidIl2cppPatchDemo/PrebuiltPatches/AllAndroidPatchFiles_Version2.zip", EXPORTED_ASSETS_PATH + "/AllAndroidPatchFiles_Version2.zip");
+        string patchVersion1Zip = PROJECT_DIR + "/Assets/AndroidIl2cppPatchDemo/PrebuiltPatches/AllAndroidPatchFiles_Version1.zip";
+        string patchVersion2Zip = PROJECT_DIR + "/Assets/AndroidIl2cppPatchDemo/PrebuiltPatches/AllAndroidPatchFiles_Version2.zip";
+        if (!File.Exists(patchVersion1Zip) || !File.Exists(patchVersion2Zip) )
+        {
+            Debug.LogError("Please build version1 and version2 first! The patches, which should be downloaded from a server, are put in the apk for demostration!");
+            return false;
+        }
+
+        FileUtil.CopyFileOrDirectory(patchVersion1Zip, EXPORTED_ASSETS_PATH + "/AllAndroidPatchFiles_Version1.zip");
+        FileUtil.CopyFileOrDirectory(patchVersion2Zip, EXPORTED_ASSETS_PATH + "/AllAndroidPatchFiles_Version2.zip");
         return true;
     }
 
