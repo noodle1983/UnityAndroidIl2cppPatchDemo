@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.Monetization;
 using UnityEngine.SceneManagement;
 
 public class SceneChanger : MonoBehaviour {
