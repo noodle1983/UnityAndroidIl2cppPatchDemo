@@ -39,39 +39,36 @@ public class AndroidBuilder : MonoBehaviour {
 
     static bool Exec(string filename, string args)
     {
+        Debug.Log("========================================================");
+        Debug.LogFormat("exec:{0}, args:{1}", filename, args);
         System.Diagnostics.Process process = new System.Diagnostics.Process();
         process.StartInfo.FileName = filename;
         process.StartInfo.Arguments = args;
+        process.StartInfo.UseShellExecute = false;
+        process.StartInfo.CreateNoWindow = true;
+        process.StartInfo.RedirectStandardOutput = true;
+        process.StartInfo.RedirectStandardError = true;              
+        process.OutputDataReceived += (sender, args) => Debug.Log(args.Data);
+        process.ErrorDataReceived += (sender, args) => Debug.LogError(args.Data);
 
         int exit_code = -1;
 
         try
         {
             process.Start();
-            if (process.StartInfo.RedirectStandardOutput && process.StartInfo.RedirectStandardError)
-            {
-                process.BeginOutputReadLine();
-                Debug.LogError(process.StandardError.ReadToEnd());
-            }
-            else if (process.StartInfo.RedirectStandardOutput)
-            {
-                string data = process.StandardOutput.ReadToEnd();
-                Debug.Log(data);
-            }
-            else if (process.StartInfo.RedirectStandardError)
-            {
-                string data = process.StandardError.ReadToEnd();
-                Debug.LogError(data);
-            }
+            process.BeginOutputReadLine();
         }
         catch (Exception e)
         {
             Debug.LogException(e);
+            Debug.Log("--------------------------------------------------------");
             return false;
         }
         process.WaitForExit();
         exit_code = process.ExitCode;
         process.Close();
+        Debug.LogFormat("exec:{0}, args:{1}, ret:{2}", filename, args, exit_code);
+        Debug.Log("--------------------------------------------------------");
         return exit_code == 0;
     }
     
