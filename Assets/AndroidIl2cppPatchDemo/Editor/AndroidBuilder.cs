@@ -44,14 +44,14 @@ public class AndroidBuilder : MonoBehaviour {
         Debug.Log("========================================================");
         Debug.LogFormat("exec:{0}, args:{1}", filename, args);
         System.Diagnostics.Process process = new System.Diagnostics.Process();
-        process.StartInfo.FileName = filename;
-        process.StartInfo.Arguments = args;
-        process.StartInfo.UseShellExecute = false;
-        process.StartInfo.CreateNoWindow = true;
-        process.StartInfo.RedirectStandardOutput = true;
-        process.StartInfo.RedirectStandardError = true;              
-        process.OutputDataReceived += (sender, args) => Debug.Log(args.Data);
-        process.ErrorDataReceived += (sender, args) => Debug.LogError(args.Data);
+        var startinfo = new System.Diagnostics.ProcessStartInfo("cmd.exe", "/C " + filename + " " + args);
+        startinfo.RedirectStandardOutput = true;
+        startinfo.RedirectStandardError = true;
+        startinfo.UseShellExecute = false;
+        startinfo.CreateNoWindow = true;
+        process.StartInfo = startinfo;
+        process.OutputDataReceived += (sender, args) => { if (args.Data != null) { Debug.Log(args.Data); } };
+        process.ErrorDataReceived += (sender, args) => { if (args.Data != null) { Debug.LogError(args.Data); } };
 
         int exit_code = -1;
 
