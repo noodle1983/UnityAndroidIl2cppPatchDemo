@@ -97,9 +97,9 @@ public class AndroidBuilder : MonoBehaviour {
         if (string.IsNullOrEmpty(ndkPath) || !Directory.Exists(ndkPath)) { ndkPath = DEFAULT_NDK_PATH; }
         if (string.IsNullOrEmpty(ndkPath) || !Directory.Exists(ndkPath))
         {
-                Debug.LogError("ndk path is empty! please config via menu path:Edit/Preference->External tools.");
-                return false;
-            }
+            Debug.LogError("ndk path is empty! please config via menu path:Edit/Preference->External tools.");
+            return false;
+        }
 
         Debug.Log("Build Env is ready!");
         Debug.Log("Build Options:");
@@ -295,6 +295,8 @@ import io.github.noodle1983.Boostrap;");
 
         string zippedPatchFile = PROJECT_DIR + "/Assets/AndroidIl2cppPatchDemo/PrebuiltPatches/AllAndroidPatchFiles_Version2.zip";
         if (File.Exists(zippedPatchFile)) { FileUtil.DeleteFileOrDirectory(zippedPatchFile);  }
+
+        allZipCmds.Append("ping 127.0.0.1 -n 1 > nul\n");
         allZipCmds.AppendFormat("cd {0} && {1} -9 -r \"{2}\" \"{3}\"\n", patchTopPath, ZIP_PATH, zippedPatchFile, "*");
         allZipCmds.AppendFormat("explorer.exe {0} \n\n", zippedPatchFile.Replace("//", "/").Replace("/", "\\"));
         allZipCmds.AppendFormat("@echo on\n\n"); //explorer as the last line wont return success, so...
