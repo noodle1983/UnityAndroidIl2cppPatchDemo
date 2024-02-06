@@ -126,6 +126,7 @@ public class AndroidBuilder : MonoBehaviour {
         string[] levels = new string[] { "Assets/AndroidIl2cppPatchDemo/Scene/0.unity" };
         BuildOptions options = BuildOptions.None;
         EditorUserBuildSettings.exportAsGoogleAndroidProject = true;
+        EditorUserBuildSettings.buildAppBundle = true;
         if (Directory.Exists(ANDROID_EXPORT_PATH)) { FileUtil.DeleteFileOrDirectory(ANDROID_EXPORT_PATH);}
         Directory.CreateDirectory(ANDROID_EXPORT_PATH);
         try
@@ -328,10 +329,13 @@ import io.github.noodle1983.Boostrap;");
         string keystoreDir = PROJECT_DIR + "/AndroidKeystore";
         if (!Directory.Exists(keystoreDir)) { Directory.CreateDirectory(keystoreDir); }
         string keystoreFile = keystoreDir + "/test.keystore";
+        StringBuilder genKeyCmd = new StringBuilder();
+        string keytoolPath = jdkPath + "/bin/keytool.exe";
+        string genKeyParam = "-genkey -alias test -validity 1000 -keyalg RSA -keystore " + keystoreFile + " -dname \"CN = Test, OU = Test, O = Test, L = Test, S = Test, C = Test\" -keysize 4096 -storepass testtest -keypass testtest";
+        genKeyCmd.AppendFormat("\"{0}\" {1}\n", keytoolPath, genKeyParam);
+        File.WriteAllText(ANDROID_EXPORT_PATH + "/gen_key.bat", genKeyCmd.ToString());
         if (!File.Exists(keystoreFile))
         {
-            string keytoolPath = jdkPath + "/bin/keytool.exe";
-            string genKeyParam = "-genkey -alias test -validity 1000 -keyalg RSA -keystore " + keystoreFile + " -dname \"CN = Test, OU = Test, O = Test, L = Test, S = Test, C = Test\" -keysize 4096 -storepass testtest -keypass testtest";
             if (!Exec(keytoolPath, genKeyParam))
             {
                 Debug.LogError("exec failed:" + keytoolPath + " " + genKeyParam);
@@ -360,6 +364,9 @@ import io.github.noodle1983.Boostrap;");
         allCmd.AppendFormat("explorer.exe {0} \n\n", ANDROID_EXPORT_PATH.Replace("//", "/").Replace("/", "\\"));
         allCmd.AppendFormat("@echo on\n\n"); //explorer as the last line wont return success, so...
         File.WriteAllText(ANDROID_EXPORT_PATH + "/build_apk.bat", allCmd.ToString());
+        File.WriteAllText(ANDROID_EXPORT_PATH + "/build_aab.bat", allCmd.ToString()
+            .Replace("assembleRelease", "bundleRelease")
+            .Replace(".apk", ".aab"));
         
         return true;
     }
