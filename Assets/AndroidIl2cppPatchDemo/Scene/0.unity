@@ -194,7 +194,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "\u67E5\u770B\u6D4B\u8BD5\u8BBE\u5907"
+  m_Text: New Scene Test
 --- !u!222 &17906389
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -833,7 +833,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &996212519
 RectTransform:
   m_ObjectHideFlags: 0
@@ -974,7 +974,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e50ac1987e0aad44cb7f2f26250944a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bannerPlacementId: 
 --- !u!1 &1126477265
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,4 +4,11 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/AndroidIl2cppPatchDemo/Scene/0.unity
+    guid: ce9a24f39e901664fb07dac737fa43a8
+  - enabled: 1
+    path: Assets/AndroidIl2cppPatchDemo/Scene/1.unity
+    guid: 029fef4e78cb3d74db2c342e957d3760
+  m_configObjects: {}
