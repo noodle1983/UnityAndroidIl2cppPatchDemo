@@ -75,7 +75,7 @@ public class AndroidBuilder : MonoBehaviour {
     public static bool ValidateConfig()
     {
         string sdkPath = EditorPrefs.GetString("AndroidSdkRoot", "");
-        if (string.IsNullOrEmpty(sdkPath)) { sdkPath = DEFAULT_SDK_PATH; }
+        if (string.IsNullOrEmpty(sdkPath) || !Directory.Exists(sdkPath)) { sdkPath = DEFAULT_SDK_PATH; }
         if (string.IsNullOrEmpty(sdkPath) || !Directory.Exists(sdkPath))
         {
             Debug.LogError("sdk path is empty! please config via menu path:Edit/Preference->External tools.");
@@ -83,7 +83,7 @@ public class AndroidBuilder : MonoBehaviour {
         }
 
         string jdkPath = EditorPrefs.GetString("JdkPath", "");
-        if (string.IsNullOrEmpty(jdkPath)) { jdkPath = DEFAULT_JDK_PATH; }
+        if (string.IsNullOrEmpty(jdkPath) || !Directory.Exists(jdkPath)) { jdkPath = DEFAULT_JDK_PATH; }
         if (string.IsNullOrEmpty(jdkPath) || !Directory.Exists(jdkPath))
         {
             Debug.LogError("jdk path is empty! please config via menu path:Edit/Preference->External tools.");
@@ -92,7 +92,7 @@ public class AndroidBuilder : MonoBehaviour {
 
         string ndkPath = EditorPrefs.GetString("AndroidNdkRootR16b", "");
         if (string.IsNullOrEmpty(ndkPath)) { ndkPath = EditorPrefs.GetString("AndroidNdkRoot", ""); }
-        if (string.IsNullOrEmpty(ndkPath)) { ndkPath = DEFAULT_NDK_PATH; }
+        if (string.IsNullOrEmpty(ndkPath) || !Directory.Exists(ndkPath)) { ndkPath = DEFAULT_NDK_PATH; }
         if (string.IsNullOrEmpty(ndkPath) || !Directory.Exists(ndkPath))
         {
             Debug.LogError("ndk path is empty! please config via menu path:Edit/Preference->External tools.");
@@ -162,7 +162,7 @@ public class AndroidBuilder : MonoBehaviour {
     public static bool BuildIl2cppSoLib()
     {
         string jdkPath = EditorPrefs.GetString("JdkPath", "");
-        if (string.IsNullOrEmpty(jdkPath)) { jdkPath = DEFAULT_JDK_PATH; }
+        if (string.IsNullOrEmpty(jdkPath) || !Directory.Exists(jdkPath)) { jdkPath = DEFAULT_JDK_PATH; }
         if (string.IsNullOrEmpty(jdkPath) || !Directory.Exists(jdkPath))
         {
             Debug.LogError("jdk path is empty! please config via menu path:Edit/Preference->External tools.");
@@ -308,7 +308,7 @@ import io.github.noodle1983.Boostrap;");
     public static bool GenerateBuildScripts()
     {
         string jdkPath = EditorPrefs.GetString("JdkPath", "");
-        if (string.IsNullOrEmpty(jdkPath)) { jdkPath = DEFAULT_JDK_PATH; }
+        if (string.IsNullOrEmpty(jdkPath) || !Directory.Exists(jdkPath)) { jdkPath = DEFAULT_JDK_PATH; }
         if (string.IsNullOrEmpty(jdkPath) || !Directory.Exists(jdkPath))
         {
             Debug.LogError("jdk path is empty! please config via menu path:Edit/Preference->External tools.");
