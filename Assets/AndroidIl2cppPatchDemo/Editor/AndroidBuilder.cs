@@ -366,7 +366,8 @@ import io.github.noodle1983.Boostrap;");
         File.WriteAllText(ANDROID_EXPORT_PATH + "/build_apk.bat", allCmd.ToString());
         File.WriteAllText(ANDROID_EXPORT_PATH + "/build_aab.bat", allCmd.ToString()
             .Replace("assembleRelease", "bundleRelease")
-            .Replace(".apk", ".aab"));
+            .Replace(".apk", ".aab")
+            .Replace("apk", "bundle"));
         
         return true;
     }
