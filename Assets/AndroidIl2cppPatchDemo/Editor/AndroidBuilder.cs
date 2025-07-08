@@ -369,6 +369,17 @@ import io.github.noodle1983.Boostrap;");
             .Replace(".apk", ".aab")
             .Replace("apk", "bundle"));
         
+        // gradle java home
+        string gradleConfigDir = ANDROID_PROJECT_PATH + "/.gradle/";
+        if (!Directory.Exists(gradleConfigDir)) { Directory.CreateDirectory(gradleConfigDir); }
+        string gradleConfigFile = gradleConfigDir + "config.properties";
+        string content = "java.home=" + jdkPath + "\n";
+        File.WriteAllText(gradleConfigFile, content
+            .Replace("\\", "\\\\")
+            .Replace("/", "\\\\")
+            .Replace(":", "\\:")
+        );
+
         return true;
     }
 
