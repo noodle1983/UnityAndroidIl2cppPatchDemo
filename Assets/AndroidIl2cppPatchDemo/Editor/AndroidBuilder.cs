@@ -405,7 +405,7 @@ import io.github.noodle1983.Boostrap;");
 
         if (!BuildIl2cppSoLib())
         {
-            Debug.LogError("failed to BuildIl2cppSoLig");
+            Debug.LogError("failed to BuildIl2cppSoLib");
             return;
         }
 
@@ -446,7 +446,7 @@ import io.github.noodle1983.Boostrap;");
 
         if (!BuildIl2cppSoLib())
         {
-            Debug.LogError("failed to BuildIl2cppSoLig");
+            Debug.LogError("failed to BuildIl2cppSoLib");
             return;
         }
 
@@ -488,7 +488,7 @@ import io.github.noodle1983.Boostrap;");
 
         if (!BuildIl2cppSoLib())
         {
-            Debug.LogError("failed to BuildIl2cppSoLig");
+            Debug.LogError("failed to BuildIl2cppSoLib");
             return;
         }
 
